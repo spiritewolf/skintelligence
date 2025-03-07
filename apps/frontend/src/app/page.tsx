@@ -37,38 +37,22 @@ export default function Index() {
                   style={{ letterSpacing: 1 }}
                   tt="uppercase"
                 >
-                  Launch Your Project Today
+                  Skingenie
                 </Text>
               </Group>
 
               <Title className={classes?.title} order={1} size="h1">
-                Build Faster, Scale Better with Our Platform
+                AI powered skincare!
               </Title>
 
               <Text size="xl" c="dimmed" maw={600}>
-                Experience the next generation of web development. Build
-                scalable applications with modern tools and frameworks.
+                Experience our cool stuff.
               </Text>
 
               <Group mt="xl">
                 <Button size="lg" leftSection={<RocketIcon />}>
                   Get Started
                 </Button>
-                <Button
-                  size="lg"
-                  variant="default"
-                  leftSection={<GitHubLogoIcon />}
-                >
-                  View on GitHub
-                </Button>
-              </Group>
-
-              <Group mt={30} gap="xl">
-                <Group gap="xs">
-                  <Text size="sm" c="dimmed">
-                    Heyyy
-                  </Text>
-                </Group>
               </Group>
             </Stack>
           </Grid.Col>
