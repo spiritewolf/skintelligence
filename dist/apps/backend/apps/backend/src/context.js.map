@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../apps/backend/src/context.ts"],
+  "sourcesContent": ["import { PrismaClient } from '@prisma/client';\nimport { SkintelligenceDb } from '../prisma/client';\n\nexport type Context = {\n  prismaDb: PrismaClient;\n};\n\nexport function createContext(): Context {\n  return { prismaDb: SkintelligenceDb };\n}\n"],
+  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AACA,IAAAA,iBAAiC;AAM1B,SAAS,gBAAyB;AACvC,SAAO,EAAE,UAAU,gCAAiB;AACtC;",
+  "names": ["import_client"]
+}

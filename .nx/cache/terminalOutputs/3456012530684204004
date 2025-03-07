@@ -1,0 +1,20 @@
+[ [32mwatch[39m ] build succeeded, watching for changes...
+[1m[31mDebugger listening on ws://localhost:9229/9c30935c-eb7d-4dea-b4f0-a57e39ada6cd[39m[22m
+[1m[31mDebugger listening on ws://localhost:9229/9c30935c-eb7d-4dea-b4f0-a57e39ada6cd[39m[22m
+[1m[31mFor help, see: https://nodejs.org/en/docs/inspector[39m[22m
+[1m[31m[39m[22m
+[1m[31mError: Root typing path "/Users/k80/Dev/skintelligence/src/context.ts" for the type "context" does not exist[39m[22m
+[1m[31m    at resolveImportPath [90m(/Users/k80/Dev/skintelligence/[39m[31mnode_modules/[4mnexus[24m/src/utils.ts:506:11[90m)[39m[31m[39m[22m
+[1m[31m    at TypegenPrinter.printDynamicImport [90m(/Users/k80/Dev/skintelligence/[39m[31mnode_modules/[4mnexus[24m/src/typegenPrinter.ts:217:45[90m)[39m[31m[39m[22m
+[1m[31m    at TypegenPrinter.printHeadersCommon [90m(/Users/k80/Dev/skintelligence/[39m[31mnode_modules/[4mnexus[24m/src/typegenPrinter.ts:146:12[90m)[39m[31m[39m[22m
+[1m[31m    at TypegenPrinter.printHeaders [90m(/Users/k80/Dev/skintelligence/[39m[31mnode_modules/[4mnexus[24m/src/typegenPrinter.ts:139:18[90m)[39m[31m[39m[22m
+[1m[31m    at TypegenPrinter.print [90m(/Users/k80/Dev/skintelligence/[39m[31mnode_modules/[4mnexus[24m/src/typegenPrinter.ts:86:18[90m)[39m[31m[39m[22m
+[1m[31m    at TypegenPrinter.printConfigured [90m(/Users/k80/Dev/skintelligence/[39m[31mnode_modules/[4mnexus[24m/src/typegenPrinter.ts:105:21[90m)[39m[31m[39m[22m
+[1m[31m    at TypegenMetadata.<anonymous> [90m(/Users/k80/Dev/skintelligence/[39m[31mnode_modules/[4mnexus[24m/src/typegenMetadata.ts:152:8[90m)[39m[31m[39m[22m
+[1m[31m    at Generator.next (<anonymous>)[39m[22m
+[1m[31m    at fulfilled [90m(/Users/k80/Dev/skintelligence/[39m[31mnode_modules/[4mtslib[24m/tslib.js:167:62[90m)[39m[31m[39m[22m
+[1m[31m[90m    at processTicksAndRejections (node:internal/process/task_queues:105:5)[39m[31m[39m[22m
+[1m[31m[39m[22m
+🚀 Server ready at http://localhost:4000/graphql
+[ [32mwatch[39m ] build succeeded, watching for changes...
+[1m[31mWatch error: Daemon closed the connection[39m[22m

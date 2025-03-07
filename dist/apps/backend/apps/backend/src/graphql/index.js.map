@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../apps/backend/src/graphql/index.ts"],
+  "sourcesContent": ["export * from './schema';\n"],
+  "mappings": ";;;;;;;;;;;;;;;AAAA;AAAA;AAAA,4BAAc,qBAAd;",
+  "names": []
+}

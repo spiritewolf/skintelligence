@@ -1,0 +1,1 @@
+export { SkintelligenceDb } from './client';

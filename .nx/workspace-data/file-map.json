@@ -1,0 +1,333 @@
+{
+  "version": "6.0",
+  "nxVersion": "20.5.0",
+  "pathMappings": {},
+  "nxJsonPlugins": [
+    {
+      "name": "@nx/next/plugin",
+      "options": {
+        "startTargetName": "start",
+        "buildTargetName": "build",
+        "devTargetName": "dev",
+        "serveStaticTargetName": "serve-static",
+        "buildDepsTargetName": "build-deps",
+        "watchDepsTargetName": "watch-deps"
+      }
+    },
+    {
+      "name": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    }
+  ],
+  "fileMap": {
+    "nonProjectFiles": [
+      {
+        "file": ".editorconfig",
+        "hash": "5443105041930014821"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "6771795186546060869"
+      },
+      {
+        "file": ".prettierignore",
+        "hash": "14688272390704683536"
+      },
+      {
+        "file": ".prettierrc",
+        "hash": "16267754514737964994"
+      },
+      {
+        "file": ".vscode/extensions.json",
+        "hash": "235626400633494639"
+      },
+      {
+        "file": ".yarn/releases/yarn-1.22.22.cjs",
+        "hash": "16546411978090768050"
+      },
+      {
+        "file": ".yarnrc",
+        "hash": "12544654281803745062"
+      },
+      {
+        "file": "README.md",
+        "hash": "12198774389194367286"
+      },
+      {
+        "file": "dist/apps/backend/apps/backend/src/context.js",
+        "hash": "6717565924393182155"
+      },
+      {
+        "file": "dist/apps/backend/apps/backend/src/context.js.map",
+        "hash": "1078128729053094953"
+      },
+      {
+        "file": "dist/apps/backend/apps/backend/src/graphql/index.js",
+        "hash": "1370724159710897372"
+      },
+      {
+        "file": "dist/apps/backend/apps/backend/src/graphql/index.js.map",
+        "hash": "614664489529404822"
+      },
+      {
+        "file": "dist/apps/backend/apps/backend/src/graphql/schema.js",
+        "hash": "16178196491944616671"
+      },
+      {
+        "file": "dist/apps/backend/apps/backend/src/graphql/schema.js.map",
+        "hash": "17183172580199534260"
+      },
+      {
+        "file": "dist/apps/backend/apps/backend/src/main.js",
+        "hash": "17180438378849591112"
+      },
+      {
+        "file": "dist/apps/backend/apps/backend/src/main.js.map",
+        "hash": "5113064606781776123"
+      },
+      {
+        "file": "dist/apps/backend/apps/backend/src/schema.js",
+        "hash": "12618562829221977198"
+      },
+      {
+        "file": "dist/apps/backend/apps/backend/src/schema.js.map",
+        "hash": "6928055244543834015"
+      },
+      {
+        "file": "dist/apps/backend/main.js",
+        "hash": "11913487525711710135"
+      },
+      {
+        "file": "dist/apps/backend/main.js.map",
+        "hash": "15299179289801136827"
+      },
+      {
+        "file": "dist/apps/backend/package.json",
+        "hash": "9248657660316140297"
+      },
+      {
+        "file": "dist/apps/backend/yarn.lock",
+        "hash": "4073520825645751044"
+      },
+      {
+        "file": "eslint.config.mjs",
+        "hash": "3462096019013144053"
+      },
+      {
+        "file": "jest.config.ts",
+        "hash": "3494843969422251966"
+      },
+      {
+        "file": "jest.preset.js",
+        "hash": "9430166341120122740"
+      },
+      {
+        "file": "nx.json",
+        "hash": "10629786189373236770"
+      },
+      {
+        "file": "package.json",
+        "hash": "14186462450571497032"
+      },
+      {
+        "file": "tmp/backend/main-with-require-overrides.js",
+        "hash": "5632968825117400376"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "1641737198334489630"
+      },
+      {
+        "file": "yarn.lock",
+        "hash": "15879696767959878556"
+      }
+    ],
+    "projectFileMap": {
+      "frontend": [
+        {
+          "file": "apps/frontend/.swcrc",
+          "hash": "2742566327615098680"
+        },
+        {
+          "file": "apps/frontend/eslint.config.mjs",
+          "hash": "10818484782922660641",
+          "deps": [
+            "npm:@eslint/eslintrc",
+            "npm:@eslint/js",
+            "npm:@eslint/compat",
+            "npm:@nx/eslint-plugin"
+          ]
+        },
+        {
+          "file": "apps/frontend/index.d.ts",
+          "hash": "5498222895072842432"
+        },
+        {
+          "file": "apps/frontend/jest.config.ts",
+          "hash": "15728202706449313553"
+        },
+        {
+          "file": "apps/frontend/next.config.js",
+          "hash": "17252635002163063865",
+          "deps": [
+            "npm:@nx/next"
+          ]
+        },
+        {
+          "file": "apps/frontend/project.json",
+          "hash": "6386383473549359909"
+        },
+        {
+          "file": "apps/frontend/public/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/frontend/public/favicon.ico",
+          "hash": "9303420814833116677"
+        },
+        {
+          "file": "apps/frontend/specs/index.spec.tsx",
+          "hash": "2873936096691223229",
+          "deps": [
+            "npm:react",
+            "npm:@testing-library/react"
+          ]
+        },
+        {
+          "file": "apps/frontend/src/app/global.css",
+          "hash": "2063387531564215811"
+        },
+        {
+          "file": "apps/frontend/src/app/layout.tsx",
+          "hash": "14273604926184744501"
+        },
+        {
+          "file": "apps/frontend/src/app/page.module.css",
+          "hash": "4786619528779355986"
+        },
+        {
+          "file": "apps/frontend/src/app/page.tsx",
+          "hash": "16033899114481054364",
+          "deps": [
+            "npm:@apollo/client"
+          ]
+        },
+        {
+          "file": "apps/frontend/src/app/providers/ApolloProvider.tsx",
+          "hash": "10119201604285945912",
+          "deps": [
+            "npm:@apollo/client",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/frontend/src/graphql/queries.ts",
+          "hash": "16091852017721462272",
+          "deps": [
+            "npm:@apollo/client"
+          ]
+        },
+        {
+          "file": "apps/frontend/tsconfig.json",
+          "hash": "9597235334204580958"
+        },
+        {
+          "file": "apps/frontend/tsconfig.spec.json",
+          "hash": "13752930008724566565"
+        }
+      ],
+      "backend": [
+        {
+          "file": "apps/backend/.gitignore",
+          "hash": "12975187279384539528"
+        },
+        {
+          "file": "apps/backend/eslint.config.mjs",
+          "hash": "2624537849564014525"
+        },
+        {
+          "file": "apps/backend/jest.config.ts",
+          "hash": "9008975264579166365"
+        },
+        {
+          "file": "apps/backend/prisma/client.ts",
+          "hash": "15581407950122624047",
+          "deps": [
+            "npm:@prisma/client"
+          ]
+        },
+        {
+          "file": "apps/backend/prisma/index.ts",
+          "hash": "12822699830236439836"
+        },
+        {
+          "file": "apps/backend/prisma/migrations/20250306234524_init/migration.sql",
+          "hash": "4645754954441651536"
+        },
+        {
+          "file": "apps/backend/prisma/migrations/migration_lock.toml",
+          "hash": "17579406468909820784"
+        },
+        {
+          "file": "apps/backend/prisma/schema.prisma",
+          "hash": "3978407862979319409"
+        },
+        {
+          "file": "apps/backend/project.json",
+          "hash": "2449762950701300230"
+        },
+        {
+          "file": "apps/backend/src/assets/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/backend/src/context.ts",
+          "hash": "18323466770219853019",
+          "deps": [
+            "npm:@prisma/client"
+          ]
+        },
+        {
+          "file": "apps/backend/src/graphql/index.ts",
+          "hash": "9293276345434439266"
+        },
+        {
+          "file": "apps/backend/src/graphql/schema.ts",
+          "hash": "15951759321585723553",
+          "deps": [
+            "npm:nexus"
+          ]
+        },
+        {
+          "file": "apps/backend/src/main.ts",
+          "hash": "11202908539539038138",
+          "deps": [
+            "npm:express",
+            "npm:apollo-server-express"
+          ]
+        },
+        {
+          "file": "apps/backend/src/schema.ts",
+          "hash": "7888523027974770964",
+          "deps": [
+            "npm:nexus"
+          ]
+        },
+        {
+          "file": "apps/backend/tsconfig.app.json",
+          "hash": "11137898450640994363"
+        },
+        {
+          "file": "apps/backend/tsconfig.json",
+          "hash": "3490524966360018312"
+        },
+        {
+          "file": "apps/backend/tsconfig.spec.json",
+          "hash": "6622138706846345436"
+        }
+      ]
+    }
+  }
+}
