@@ -23,12 +23,12 @@
 # misc
 .DS_Store
 *.pem
-/dist/*
-/tmp/*
+dist/*
+tmp/*
 .prettierrc
 .yarnrc
-/.nx/
-/.vscode/
+.nx/
+.vscode/*
 
 # debug
 npm-debug.log*
