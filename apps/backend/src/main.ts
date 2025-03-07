@@ -1,5 +1,5 @@
-import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
+import express from 'express';
 import { schema } from './schema';
 
 async function main() {
@@ -22,7 +22,7 @@ async function main() {
 
   app.listen(port, () => {
     console.log(
-      `🚀 Server ready at http://localhost:${port}${server.graphqlPath}`
+      `🚀 Server ready at http://localhost:${port}/api${server.graphqlPath}`
     );
   });
 }

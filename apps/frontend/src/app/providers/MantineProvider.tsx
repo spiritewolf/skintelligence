@@ -1,17 +1,19 @@
 'use client';
 
-import { createTheme, MantineProvider as Provider } from '@mantine/core';
+import { MantineProvider as Provider } from '@mantine/core';
 import '@mantine/core/styles.css';
 import { ReactNode } from 'react';
-import { shadcnTheme } from '../theme/theme';
-import { shadcnCssVariableResolver } from '../theme/cssVariableResolver';
-import '../theme/style.css';
+import '../../styles/style.css';
+
+import { shadcnCssVariableResolver } from '../cssVariableResolver';
+import { shadcnTheme } from '../theme';
 
 export default function MantineProvider({ children }: { children: ReactNode }) {
   return (
     <Provider
       theme={shadcnTheme}
       cssVariablesResolver={shadcnCssVariableResolver}
+      defaultColorScheme="dark"
     >
       {children}
     </Provider>

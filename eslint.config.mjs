@@ -10,6 +10,8 @@ export default [
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     rules: {
+      'no-unused-vars': 'warn',
+      'no-empty-function': 'warn',
       '@nx/enforce-module-boundaries': [
         'error',
         {
