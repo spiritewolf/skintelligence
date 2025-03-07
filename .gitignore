@@ -23,12 +23,22 @@
 # misc
 .DS_Store
 *.pem
-dist/*
-tmp/*
 .prettierrc
-.yarnrc
+.prettierignore
+.editorconfig
+
+.vscode/
+
+# Nx cache and build artifacts
 .nx/
-.vscode/*
+dist/
+
+# Yarn files
+.yarn/
+.yarnrc
+
+# Temporary files
+tmp/
 
 # debug
 npm-debug.log*

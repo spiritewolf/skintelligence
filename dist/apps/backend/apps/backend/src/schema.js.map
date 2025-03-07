@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../../../apps/backend/src/schema.ts"],
-  "sourcesContent": ["import { makeSchema, objectType, queryType } from 'nexus';\nimport { join } from 'path';\nimport * as types from './graphql';\n\nexport const schema = makeSchema({\n  types: [types],\n  outputs: {\n    typegen: join(\n      process.cwd(),\n      'node_modules/@types/nexus-typegen/index.d.ts'\n    ),\n    schema: join(process.cwd(), 'schema.graphql'),\n  },\n  contextType: {\n    module: join(process.cwd(), 'src/context.ts'),\n    export: 'Context',\n  },\n});\n"],
-  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,mBAAkD;AAClD,kBAAqB;AACrB,YAAuB;AAEhB,MAAM,aAAS,yBAAW;AAAA,EAC/B,OAAO,CAAC,KAAK;AAAA,EACb,SAAS;AAAA,IACP,aAAS;AAAA,MACP,QAAQ,IAAI;AAAA,MACZ;AAAA,IACF;AAAA,IACA,YAAQ,kBAAK,QAAQ,IAAI,GAAG,gBAAgB;AAAA,EAC9C;AAAA,EACA,aAAa;AAAA,IACX,YAAQ,kBAAK,QAAQ,IAAI,GAAG,gBAAgB;AAAA,IAC5C,QAAQ;AAAA,EACV;AACF,CAAC;",
-  "names": []
-}

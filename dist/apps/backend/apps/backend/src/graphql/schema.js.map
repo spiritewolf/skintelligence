@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../../../../apps/backend/src/graphql/schema.ts"],
-  "sourcesContent": ["import { mutationType, objectType, queryType } from 'nexus';\n\nexport const User = objectType({\n  name: 'User',\n  definition(t) {\n    t.nonNull.id('id');\n    t.nonNull.string('username');\n  },\n});\n\nexport const UserQuery = queryType({\n  definition(t) {\n    t.list.field('users', {\n      type: 'User',\n      resolve: async (_parent, _args, ctx) => {\n        return ctx.prisma.user.findMany();\n      },\n    });\n  },\n});\n\n// export const PostMutation = mutationType({\n//   definition(t) {\n//     t.field('createPost', {\n//       type: 'Post',\n//       args: { title: 'String', content: 'String', authorId: 'String' },\n//       resolve: async (_parent, args, ctx) => {\n//         return ctx.prisma.post.create({ data: args });\n//       },\n//     });\n//   },\n// });\n"],
-  "mappings": ";;;;;;;;;;;;;;;;;;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,mBAAoD;AAE7C,MAAM,WAAO,yBAAW;AAAA,EAC7B,MAAM;AAAA,EACN,WAAW,GAAG;AACZ,MAAE,QAAQ,GAAG,IAAI;AACjB,MAAE,QAAQ,OAAO,UAAU;AAAA,EAC7B;AACF,CAAC;AAEM,MAAM,gBAAY,wBAAU;AAAA,EACjC,WAAW,GAAG;AACZ,MAAE,KAAK,MAAM,SAAS;AAAA,MACpB,MAAM;AAAA,MACN,SAAS,OAAO,SAAS,OAAO,QAAQ;AACtC,eAAO,IAAI,OAAO,KAAK,SAAS;AAAA,MAClC;AAAA,IACF,CAAC;AAAA,EACH;AACF,CAAC;",
-  "names": []
-}
