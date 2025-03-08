@@ -1,5 +1,6 @@
 import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core';
-// import '../styles/globals.scss';
+import '../styles/fonts.css';
+import '../styles/globals.scss';
 import '../styles/style.css';
 import { ApolloWrapper } from './providers/ApolloProvider';
 import MantineProvider from './providers/MantineProvider';

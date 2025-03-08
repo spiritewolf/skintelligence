@@ -4,8 +4,9 @@ import { useQuery } from '@apollo/client';
 import {
   Box,
   Container,
-  Fieldset,
+  Grid,
   Paper,
+  Stack,
   Text,
   TextInput,
   Title,
@@ -35,35 +36,47 @@ export default function GettingStarted() {
   const { data, loading, error } = useQuery(GET_USERS);
   return (
     <ContentWrapper>
-      <Box>
+      <Box w="100%">
         <Container size="xl" py={120}>
-          <Title order={1} size="h1">
-            First, tell us about yourself.
-          </Title>
+          <Grid gutter={40} align="center">
+            <Grid.Col span={6}>
+              <Stack gap="xl">
+                <Title
+                  order={1}
+                  size="h1"
+                  style={{
+                    color: 'var(--mantine-primary-color-4)',
+                  }}
+                >
+                  First, tell us about yourself.
+                </Title>
 
-          <Text size="xl" c="dimmed" maw={600}>
-            We just need a litttle info to get started
-          </Text>
+                <Text size="xl" c="dimmed" maw={600}>
+                  We just need a litttle info to get started
+                </Text>
+              </Stack>
+            </Grid.Col>
 
-          <Paper
-            mih={320}
-            radius="md"
-            p="xl"
-            bg={'rgba(255, 255, 255, 0.1)'}
-            bd={' 1px solid rgba(255, 255, 255, 0.1) '}
-          >
-            <form onSubmit={form.onSubmit((values) => console.log(values))}>
-              <Fieldset>
-                <TextInput
-                  label="Username"
-                  placeholder="skincareaddict123"
-                  withAsterisk
-                  key={form.key('username')}
-                />
-                <TextInput label="Email" placeholder="Email" mt="md" />
-              </Fieldset>
-            </form>
-          </Paper>
+            <Grid.Col span={6}>
+              <Paper
+                radius="md"
+                p="md"
+                bg="var(--mantine-primary-color-6)"
+                bd={' 1px solid rgba(255, 255, 255, 0.01) '}
+              >
+                <form onSubmit={form.onSubmit((values) => console.log(values))}>
+                  <TextInput
+                    label="Username"
+                    placeholder="skincareaddict123"
+                    withAsterisk
+                    key={form.key('username')}
+                    bg="dark"
+                  />
+                  <TextInput label="Email" placeholder="Email" mt="md" />
+                </form>
+              </Paper>
+            </Grid.Col>
+          </Grid>
         </Container>
       </Box>
     </ContentWrapper>
