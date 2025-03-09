@@ -1,5 +1,6 @@
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
+import { createContext } from './context';
 import { schema } from './schema';
 
 async function main() {
@@ -14,7 +15,7 @@ async function main() {
 
   const server = new ApolloServer({
     schema,
-    context: ({ req, res }) => ({ req, res }), // later integrate Prisma and auth here
+    context: createContext, // later integrate Prisma and auth here
   });
 
   await server.start();

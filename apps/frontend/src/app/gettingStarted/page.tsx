@@ -3,6 +3,7 @@
 import { useQuery } from '@apollo/client';
 import {
   Box,
+  Button,
   Container,
   Grid,
   Paper,
@@ -39,7 +40,7 @@ export default function GettingStarted() {
       <Box w="100%">
         <Container size="xl" py={120}>
           <Grid gutter={40} align="center">
-            <Grid.Col span={6}>
+            <Grid.Col span={{ base: 12, md: 6 }}>
               <Stack gap="xl">
                 <Title
                   order={1}
@@ -57,23 +58,27 @@ export default function GettingStarted() {
               </Stack>
             </Grid.Col>
 
-            <Grid.Col span={6}>
+            <Grid.Col span={{ base: 12, md: 6 }}>
               <Paper
                 radius="md"
                 p="md"
                 bg="var(--mantine-primary-color-6)"
                 bd={' 1px solid rgba(255, 255, 255, 0.01) '}
               >
-                <form onSubmit={form.onSubmit((values) => console.log(values))}>
-                  <TextInput
-                    label="Username"
-                    placeholder="skincareaddict123"
-                    withAsterisk
-                    key={form.key('username')}
-                    bg="dark"
-                  />
-                  <TextInput label="Email" placeholder="Email" mt="md" />
-                </form>
+                <Stack>
+                  <form
+                    onSubmit={form.onSubmit((values) => console.log(values))}
+                  >
+                    <TextInput
+                      label="Username"
+                      placeholder="skincareaddict123"
+                      withAsterisk
+                      key={form.key('username')}
+                    />
+                    <TextInput label="Email" placeholder="Email" mt="md" />
+                  </form>
+                  <Button bg="dark">Submit</Button>
+                </Stack>
               </Paper>
             </Grid.Col>
           </Grid>
