@@ -1,8 +1,10 @@
+'use client';
+
 import { AppShell, Container, NavLink, Title } from '@mantine/core';
 import { HomeIcon } from '@radix-ui/react-icons';
 import { usePathname } from 'next/navigation';
 
-export default function Navbar({ children }: { children: React.ReactNode }) {
+export const Navbar = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   return (
     <AppShell
@@ -23,7 +25,7 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
             alignItems: 'center',
           }}
         >
-          <Title order={3}>My App</Title>
+          <Title order={3}>Skintelligence</Title>
           <div style={{ display: 'flex', gap: '1rem' }}>
             <NavLink
               href="/"
@@ -37,4 +39,4 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
       {children}
     </AppShell>
   );
-}
+};

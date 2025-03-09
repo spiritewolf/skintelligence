@@ -1,4 +1,6 @@
 import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
+import '@mantine/notifications/styles.css';
 import '../styles/fonts.css';
 import '../styles/globals.scss';
 import '../styles/style.css';
@@ -23,7 +25,10 @@ export default function RootLayout({
       </head>
       <body>
         <ApolloWrapper>
-          <MantineProvider>{children}</MantineProvider>
+          <MantineProvider>
+            <Notifications />
+            {children}
+          </MantineProvider>
         </ApolloWrapper>
       </body>
     </html>

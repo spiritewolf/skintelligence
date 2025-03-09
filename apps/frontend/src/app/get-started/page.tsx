@@ -1,11 +1,12 @@
 'use client';
 
-import { useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import {
   Box,
   Button,
   Container,
   Grid,
+  Group,
   Paper,
   Stack,
   Text,
@@ -13,28 +14,42 @@ import {
   Title,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
+import { useRouter } from 'next/navigation';
 import { ContentWrapper } from '../../components/contentWrapper/contentWrapper';
-import { GET_USERS } from '../api/graphql/queries';
+import { CREATE_USER } from '../api/graphql/queries';
 
-type GettingStartedFormData = {
+type CreateUserFormData = {
   username: string;
   email?: string;
 };
 
 export default function GettingStarted() {
-  const form = useForm<GettingStartedFormData>({
+  const router = useRouter();
+  const form = useForm<CreateUserFormData>({
     mode: 'uncontrolled',
     initialValues: {
       username: '',
       email: '',
     },
-
-    validate: {
-      email: (value) =>
-        value && /^\S+@\S+$/.test(value) ? null : 'Invalid email',
+  });
+  const [createUserMutation] = useMutation(CREATE_USER, {
+    onCompleted: ({ createUser }) => {
+      if (createUser) {
+        notifications.show({
+          title: 'Success!',
+          message: 'Your user has been created.',
+          color: 'violet',
+        });
+        router.push(`/get-started/questionnaire/${createUser.id}/`);
+      }
     },
   });
-  const { data, loading, error } = useQuery(GET_USERS);
+
+  const onSubmit = async (data: CreateUserFormData) => {
+    createUserMutation({ variables: { data } });
+  };
+
   return (
     <ContentWrapper>
       <Box w="100%">
@@ -66,18 +81,27 @@ export default function GettingStarted() {
                 bd={' 1px solid rgba(255, 255, 255, 0.01) '}
               >
                 <Stack>
-                  <form
-                    onSubmit={form.onSubmit((values) => console.log(values))}
-                  >
+                  <form onSubmit={form.onSubmit(onSubmit)}>
                     <TextInput
                       label="Username"
                       placeholder="skincareaddict123"
                       withAsterisk
                       key={form.key('username')}
+                      {...form.getInputProps('username')}
                     />
-                    <TextInput label="Email" placeholder="Email" mt="md" />
+                    <TextInput
+                      label="Email"
+                      placeholder="Email"
+                      mt="md"
+                      key={form.key('email')}
+                      {...form.getInputProps('email')}
+                    />
+                    <Group justify="flex-end" mt="md">
+                      <Button bg="dark" type="submit">
+                        Submit
+                      </Button>
+                    </Group>
                   </form>
-                  <Button bg="dark">Submit</Button>
                 </Stack>
               </Paper>
             </Grid.Col>

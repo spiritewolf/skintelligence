@@ -1,21 +1,13 @@
+'use client';
+
 import { Box, Container, Stack, Text, Title } from '@mantine/core';
-import { IconProps } from '@radix-ui/react-icons/dist/types';
 import React from 'react';
-import Navbar from '../navbar/navbar';
+import { Navbar } from '../navbar/navbar';
 
 type ContentWrapperProps = {
   children: React.ReactNode;
   title?: string;
   description?: string | React.ReactNode;
-};
-
-type MenuItem = {
-  id: string;
-  href: string;
-  label: string;
-  icon: React.ForwardRefExoticComponent<
-    IconProps & React.RefAttributes<SVGSVGElement>
-  >;
 };
 
 export const ContentWrapper = ({

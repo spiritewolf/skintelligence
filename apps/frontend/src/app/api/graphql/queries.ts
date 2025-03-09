@@ -9,11 +9,21 @@ export const GET_USERS = gql`
   }
 `;
 
+export const GET_USER = gql`
+  query GetUser($where: UserWhereInput!) {
+    user(where: $where) {
+      id
+      username
+    }
+  }
+`;
+
 export const CREATE_USER = gql`
-  mutation CreateUser($data: CreateUserInput) {
+  mutation CreateUser($data: CreateUserInput!) {
     createUser(data: $data) {
       id
       username
+      email
     }
   }
 `;

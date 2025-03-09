@@ -12,10 +12,16 @@ type Mutation {
 }
 
 type Query {
+  user(where: UserWhereInput!): [User]
   users: [User]
 }
 
 type User {
+  email: String
   id: ID!
   username: String!
+}
+
+input UserWhereInput {
+  id: ID!
 }

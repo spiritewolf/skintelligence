@@ -63,7 +63,7 @@ export default function Index() {
                   <Button
                     size="lg"
                     leftSection={<RocketIcon />}
-                    onClick={() => router.push('/gettingStarted')}
+                    onClick={() => router.push('/get-started')}
                   >
                     Get Started
                   </Button>

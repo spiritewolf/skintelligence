@@ -1,12 +1,21 @@
 'use client';
 
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import {
+  ApolloClient,
+  ApolloProvider,
+  HttpLink,
+  InMemoryCache,
+} from '@apollo/client';
 import { ReactNode } from 'react';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/api/graphql', // points to our GraphQL API endpoint
+  link: new HttpLink({
+    uri:
+      process.env.NEXT_PUBLIC_GRAPHQL_API ||
+      'http://localhost:4000/api/graphql',
+    credentials: 'include',
+  }),
   cache: new InMemoryCache(),
-  // For production, consider adding error handling, retries, or additional links.
 });
 
 export function ApolloWrapper({ children }: { children: ReactNode }) {
