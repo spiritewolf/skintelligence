@@ -52,7 +52,7 @@ export default function GettingStarted() {
                 </Title>
 
                 <Text size="xl" c="dimmed" maw={600}>
-                  We just need a litttle info to get started
+                  We just need a little info to get started
                 </Text>
               </Stack>
             </Grid.Col>
