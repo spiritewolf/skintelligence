@@ -33,7 +33,7 @@ export const UserQueries = extendType({
         return ctx.prismaDb.user.findMany();
       },
     });
-    t.list.field('user', {
+    t.field('user', {
       type: User,
       args: { where: nonNull(UserWhereInput) },
       resolve: async (_parent, { where }, ctx) => {

@@ -12,7 +12,7 @@ type Mutation {
 }
 
 type Query {
-  user(where: UserWhereInput!): [User]
+  user(where: UserWhereInput!): User
   users: [User]
 }
 
