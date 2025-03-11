@@ -2,7 +2,13 @@
   "compilerOptions": {
     "strict": true,
     "baseUrl": ".",
-    "paths": {},
+    "paths": {
+      "@skintelligence/frontend/*": ["apps/frontend/src/*"],
+      "@skintelligence/backend/*": [
+        "apps/backend/prisma/*",
+        "apps/backend/src/*"
+      ]
+    },
     "esModuleInterop": true,
     "moduleResolution": "node",
     "noImplicitAny": true,

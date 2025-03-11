@@ -14,10 +14,49 @@ datasource db {
 }
 
 model User {
-  id    String     @id @default(uuid()) @db.Uuid
+  id        String   @id @default(uuid()) @db.Uuid
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   username String
-  email String?
+  email    String?
+
+  sessions Session[]
+
+  questionnaire Questionnaire[]
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  token     String   @unique
+  expiresAt DateTime
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Questionnaire {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id])
+
+  responses QuestionnaireResponse[]
+}
+
+model QuestionnaireResponse {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  questionId String
+  answer     String
+
+  questionnaireId String        @db.Uuid
+  questionnaire   Questionnaire @relation(fields: [questionnaireId], references: [id])
 }

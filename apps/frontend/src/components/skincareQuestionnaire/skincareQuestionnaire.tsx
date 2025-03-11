@@ -1,30 +1,38 @@
 'use client';
 
 import { useQuery } from '@apollo/client';
-import { Box, Button, Container, Radio, Space, Text } from '@mantine/core';
-import { Form, Formik, FormikErrors } from 'formik';
+import {
+  Box,
+  Button,
+  Card,
+  Container,
+  Radio,
+  Space,
+  Text,
+  Title,
+} from '@mantine/core';
+import { Form, Formik } from 'formik';
 import { useState } from 'react';
 import { GET_USER } from '../../app/api/graphql/queries';
 import { ContentWrapper } from '../contentWrapper/contentWrapper';
 import { questionnaire } from './constants';
 
-type SkincareQuestionnaireFormData = {
-  responses: string[];
+type QuestionnaireResponse = {
+  responses: {
+    questionId: string;
+    answer: string;
+  }[];
 };
-
-type SetFieldValue = (
-  field: string,
-  value: any,
-  shouldValidate?: boolean
-) => Promise<void | FormikErrors<SkincareQuestionnaireFormData>>;
 
 export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const isLastStep = currentStep === questionnaire.length - 1;
 
-  // Initialize a responses array with an empty string for each question.
-  const initialValues: SkincareQuestionnaireFormData = {
-    responses: questionnaire.map(() => ''),
+  const initialValues: QuestionnaireResponse = {
+    responses: questionnaire.map((q) => ({
+      questionId: q.questionId,
+      answer: '',
+    })),
   };
 
   const { data, loading, error } = useQuery(GET_USER, {
@@ -33,12 +41,8 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
     },
   });
 
-  const handleNext = (
-    values: SkincareQuestionnaireFormData,
-    setFieldValue: SetFieldValue
-  ) => {
-    // Optional: you might want to validate that the user picked an option
-    if (!values.responses[currentStep]) {
+  const handleNext = (values: QuestionnaireResponse) => {
+    if (!values.responses[currentStep].answer) {
       alert('Please select an answer');
       return;
     }
@@ -47,69 +51,95 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
 
   const handleBack = () => setCurrentStep(currentStep - 1);
 
-  //   const handleSubmit = (values: , actions) => {
-
-  //     }
-  //   };
+  const handleSubmit = (values: QuestionnaireResponse) => {
+    return;
+  };
 
   return (
     <ContentWrapper>
       <Box w="100%">
         <Container size="xl" py={120}>
-          {!loading && !error && data.user.username ? (
-            <Text color="blue">Hello, {data.user.username}</Text>
-          ) : null}
-          <Formik
-            initialValues={initialValues}
-            onSubmit={(values) => {
-              console.log('Final questionnaire values:', values);
-              // You can handle submission (e.g., sending to an API) here.
-            }}
-          >
-            {({ values, setFieldValue, handleSubmit }) => (
-              <Form onSubmit={handleSubmit}>
-                <Text fw={500} size="lg">
-                  {questionnaire[currentStep].question}
-                </Text>
-                <Space h="md" />
-                <Radio.Group
-                  value={values.responses[currentStep]}
-                  onChange={(value) =>
-                    setFieldValue(`responses[${currentStep}]`, value)
-                  }
-                >
-                  {questionnaire[currentStep].options.map((option, index) => (
-                    <Radio
-                      key={index}
-                      value={option.value}
-                      label={option.label}
-                      mt="xs"
-                    />
-                  ))}
-                </Radio.Group>
-                <Space h="xl" />
-                <div
-                  style={{ display: 'flex', justifyContent: 'space-between' }}
-                >
-                  {currentStep > 0 && (
-                    <Button variant="default" onClick={handleBack}>
-                      Back
-                    </Button>
-                  )}
-                  {isLastStep ? (
-                    <Button type="submit">Submit</Button>
-                  ) : (
-                    <Button
-                      type="button"
-                      onClick={() => handleNext(values, setFieldValue)}
+          <Box>
+            <Title
+              order={2}
+              ta="center"
+              size={40}
+              fw={800}
+              pos="relative"
+              style={{
+                fill: 'linear-gradient(180deg, var(--mantine-primary-color-filled), var(--mantine-primary-color-8))',
+              }}
+            >
+              Skincare Assessment
+            </Title>
+            <Text c="dimmed" ta="center" size="lg" maw={600} mx="auto" mt="md">
+              Answer a few simple questions to understand your skin type and
+              concerns, and receive personalized recommendations for your
+              skincare routine.
+            </Text>
+          </Box>
+          <Card shadow="sm" padding="lg" radius="md" withBorder mt={10}>
+            {!loading && !error && data.user.username ? (
+              <Text color="indigo">Hello, {data.user.username}</Text>
+            ) : null}
+            <Formik
+              initialValues={initialValues}
+              onSubmit={(values) => {
+                console.log('Final questionnaire values:', values);
+                // You can handle submission (e.g., sending to an API) here.
+              }}
+            >
+              {({ values, setFieldValue, handleSubmit }) => {
+                const currentQuestion = questionnaire[currentStep];
+                return (
+                  <Form onSubmit={handleSubmit}>
+                    <Text fw={500} size="lg">
+                      {currentQuestion.question}
+                    </Text>
+                    <Space h="md" />
+                    <Radio.Group
+                      value={values.responses[currentStep].answer}
+                      onChange={(value) =>
+                        setFieldValue(`responses[${currentStep}].answer`, value)
+                      }
                     >
-                      Next
-                    </Button>
-                  )}
-                </div>
-              </Form>
-            )}
-          </Formik>
+                      {currentQuestion.options.map((option, index) => (
+                        <Radio
+                          key={index}
+                          value={option.value}
+                          label={option.label}
+                          mt="xs"
+                        />
+                      ))}
+                    </Radio.Group>
+                    <Space h="xl" />
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                      }}
+                    >
+                      {currentStep > 0 && (
+                        <Button variant="default" onClick={handleBack}>
+                          Back
+                        </Button>
+                      )}
+                      {isLastStep ? (
+                        <Button type="submit">Submit</Button>
+                      ) : (
+                        <Button
+                          type="button"
+                          onClick={() => handleNext(values)}
+                        >
+                          Next
+                        </Button>
+                      )}
+                    </div>
+                  </Form>
+                );
+              }}
+            </Formik>
+          </Card>
         </Container>
       </Box>
     </ContentWrapper>

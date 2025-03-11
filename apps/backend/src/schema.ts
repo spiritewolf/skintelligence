@@ -1,8 +1,9 @@
 import { makeSchema } from 'nexus';
+import { NexusGraphQLSchema } from 'nexus/dist/core';
 import { join } from 'path';
 import * as types from './graphql';
 
-export const schema = makeSchema({
+export const schema: NexusGraphQLSchema = makeSchema({
   types: [types],
   outputs: {
     typegen: join(

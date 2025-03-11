@@ -9,6 +9,7 @@
 
 export type SkincareQuestion = {
   question: string;
+  questionId: string;
   options: {
     label: string;
     value: string;
@@ -19,6 +20,7 @@ export const questionnaire: SkincareQuestion[] = [
   {
     question:
       'How would you describe your skin immediately after cleansing and drying, but before putting on products?',
+    questionId: '1',
     options: [
       {
         label: 'Tight and/or dry (ready to slather on moisturizer)',
@@ -32,6 +34,7 @@ export const questionnaire: SkincareQuestion[] = [
   {
     question:
       'How would you describe the way your skin feels at the end of a long day?',
+    questionId: '2',
     options: [
       { label: 'Dry or flaky, moisturizer standing by', value: 'dry' },
       { label: 'Greasy all over', value: 'oily' },
@@ -41,6 +44,7 @@ export const questionnaire: SkincareQuestion[] = [
   },
   {
     question: 'How many blemishes do you get each month?',
+    questionId: '3',
     options: [
       { label: '10 or more', value: 'acne' },
       { label: 'Around 4-6', value: 'acne' },
@@ -51,6 +55,7 @@ export const questionnaire: SkincareQuestion[] = [
   {
     question:
       'How often do you experience the following: redness, irritation, itchiness, peeling or flaking, feeling of warmth on cheeks?',
+    questionId: '4',
     options: [
       { label: 'I experience multiple of those daily', value: 'sensitive' },
       { label: 'I experience at least one of those daily', value: 'sensitive' },
@@ -60,6 +65,7 @@ export const questionnaire: SkincareQuestion[] = [
   },
   {
     question: 'What do you wish for your skin care routine to fix for you?',
+    questionId: '5',
     options: [
       { label: 'Acne and/or blemishes', value: 'acne' },
       { label: 'Texture/uneven skin tone, dark spots', value: 'texture' },
@@ -72,6 +78,7 @@ export const questionnaire: SkincareQuestion[] = [
   },
   {
     question: 'How often do you wear sunscreen?',
+    questionId: '6',
     options: [
       { label: 'Daily, with multiple reapplications', value: '' },
       { label: 'Daily, but I forget to reapply', value: '' },
@@ -80,42 +87,3 @@ export const questionnaire: SkincareQuestion[] = [
     ],
   },
 ];
-
-// export const options = [{
-//   'How would you describe your skin immediately after cleansing and drying, but before putting on products?': {
-//     a: { label: 'Tight and/or dry (ready to slather on moisturizer)', value: 'dry' },
-//     b: { label: 'Shiny and/or tight', value: 'oily' },
-//     c: { label: 'Slightly warm, redness', value: 'combo' },
-//     d: { label: 'None of the above, or feels normal', value: 'normal' },
-//   },
-//   'How would you describe the way your skin feels at the end of a long day?': {
-//     a: { label: 'Dry or flaky, moisturizer standing by', value: 'dry' },
-//     b: { label: 'Greasy all over', value: 'oily' },
-//     c: { label: 'Dry or normal on cheeks, greasy in t-zone', value: 'combo' },
-//     d: { label: 'Neither greasy nor dry', value: 'normal' },
-//   },
-//   'How many blemishes do you get each month?': {
-//     a: { label: '10 or more', value: 'acne' },
-//     b: { label: 'Around 4-6', value: 'acne' },
-//     c: { label: 'Just a few', value: '' },
-//     d: { label: 'Very few or none at all', value: '' },
-//   },
-//   'How often do you experience the following: redness, irritation, itchiness, peeling or flaking, feeling of warmth on cheeks?': {
-//     a: { label: 'I experience multiple of those daily', value: 'sensitive' },
-//     b: { label: 'I experience at least one of those daily', value: 'sensitive' },
-//     c: { label: 'I experience some of those occasionally', value: '' },
-//     d: { label: 'I rarely or never experience those', value: '' },
-//   },
-//   'What do you wish for your skin care routine to fix for you?': {
-//     a: { label: 'Acne and/or blemishes', value: 'acne' },
-//     b: { label: 'Texture/uneven skin tone, dark spots', value: 'texture' },
-//     c: { label: 'Anti-aging, or proactive anti-aging', value: 'age' },
-//     d: { label: `Radiance (glowy, healthy looking, or 'glass' skin)`, value: 'hydration' },
-//   },
-//   'How often do you wear sunscreen?': {
-//     a: { label: 'Daily, with multiple reapplications', value: '' },
-//     b: { label: 'Daily, but I forget to reapply', value: '' },
-//     c: { label: `Only when I need to or when I'm in the sun`, value: 'sun' },
-//     d: { label: 'Rarely, if ever', value: 'sun' },
-//   },
-// }];

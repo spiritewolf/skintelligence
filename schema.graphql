@@ -12,13 +12,32 @@ type Mutation {
 }
 
 type Query {
-  user(where: UserWhereInput!): User
-  users: [User]
+  getUser(where: UserWhereInput!): User
+}
+
+type Questionnaire {
+  id: ID!
+  responses: [QuestionnaireResponse!]
+  userId: ID!
+}
+
+type QuestionnaireResponse {
+  answer: String!
+  id: ID!
+  questionId: String!
+}
+
+type Session {
+  expiresAt: String!
+  id: ID!
+  token: String!
+  userId: ID!
 }
 
 type User {
   email: String
   id: ID!
+  sessions: [Session!]!
   username: String!
 }
 
