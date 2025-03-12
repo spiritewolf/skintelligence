@@ -1,5 +1,6 @@
 'use client';
 
+import { useMutation } from '@apollo/client';
 import {
   Box,
   Button,
@@ -18,6 +19,7 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { ContentWrapper } from '../../components/contentWrapper/contentWrapper';
+import { CREATE_USER } from '../api/graphql/route';
 
 type CreateUserFormData = {
   username: string;
@@ -34,6 +36,20 @@ export default function GettingStarted() {
       username: '',
       email: '',
     },
+  });
+
+  const [createUserMutation] = useMutation(CREATE_USER, {
+    onCompleted: ({ createUser }) => {
+      if (createUser) {
+        notifications.show({
+          title: 'Success!',
+          message: 'Your user has been created.',
+          color: 'violet',
+        });
+        router.push(`/get-started/questionnaire/${createUser.id}/`);
+      }
+    },
+    onError: (error) => console.log(error),
   });
 
   const onSubmit = async (data: CreateUserFormData) => {
@@ -62,6 +78,8 @@ export default function GettingStarted() {
       router.push(`/get-started/questionnaire/${session?.user?.id}/`);
     }
   }, [router, session?.user?.id]);
+
+  console.log('sessionnnn', session);
 
   return (
     <ContentWrapper>
