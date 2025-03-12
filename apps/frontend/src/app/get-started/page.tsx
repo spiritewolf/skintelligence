@@ -1,6 +1,5 @@
 'use client';
 
-import { useMutation } from '@apollo/client';
 import {
   Box,
   Button,
@@ -15,10 +14,10 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { ContentWrapper } from '../../components/contentWrapper/contentWrapper';
-import { CREATE_USER } from '../api/graphql/route';
 
 type CreateUserFormData = {
   username: string;
@@ -37,24 +36,32 @@ export default function GettingStarted() {
     },
   });
 
-  const [createUserMutation] = useMutation(CREATE_USER, {
-    onCompleted: ({ createUser }) => {
-      if (createUser) {
-        notifications.show({
-          title: 'Success!',
-          message: 'Your user has been created.',
-          color: 'violet',
-        });
-        router.push(`/get-started/questionnaire/${createUser.id}/`);
-      }
-    },
-    onError: (error) => console.log(error),
-  });
-
   const onSubmit = async (data: CreateUserFormData) => {
     // createUserMutation({ variables: { data } });
-    await signIn('credentials', { ...data });
+    const { username, email } = data;
+
+    const res = await signIn('credentials', {
+      username,
+      email,
+      redirect: false,
+    });
+
+    if (res?.ok) {
+      notifications.show({
+        title: 'Success!',
+        message: 'Your user has been created.',
+        color: 'violet',
+      });
+    }
+
+    console.log('res', res);
   };
+
+  useEffect(() => {
+    if (session?.user?.id) {
+      router.push(`/get-started/questionnaire/${session?.user?.id}/`);
+    }
+  }, [router, session?.user?.id]);
 
   return (
     <ContentWrapper>
@@ -108,6 +115,7 @@ export default function GettingStarted() {
                       </Button>
                     </Group>
                   </form>
+                  <Button onClick={() => signOut()}>Logout</Button>
                 </Stack>
               </Paper>
             </Grid.Col>

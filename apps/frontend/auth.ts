@@ -35,7 +35,7 @@ export const authOptions: AuthOptions = {
           };
         } catch (error) {
           console.error('Login error:', error);
-          return null;
+          throw new Error('Internal server error');
         }
       },
     }),
@@ -45,18 +45,25 @@ export const authOptions: AuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.name = user.name;
+        token.username = user.username;
         token.email = user.email;
       }
+
       return token;
     },
     async session({ session, token }) {
-      console.log('=========SESSION', session, token);
       if (session.user) {
-        // session.user.id = token.id;
-        session.user.name = token.name;
-        session.user.email = token.email;
+        session.user.id = token.id as string;
+        session.user.username = token.username as string;
+        session.user.email = token.email as string;
+      } else {
+        session.user = {
+          id: token.id as string, // ✅ Ensure ID is present
+          username: token.username as string, // ✅ Ensure username is present
+          email: token.email,
+        };
       }
+
       return session;
     },
   },

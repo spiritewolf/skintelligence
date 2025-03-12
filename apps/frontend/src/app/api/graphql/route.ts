@@ -14,6 +14,7 @@ export const GET_USER = gql`
     user(where: $where) {
       id
       username
+      email
     }
   }
 `;
