@@ -3,7 +3,11 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@skintelligence/frontend/*": ["apps/frontend/src/*"],
+      "@skintelligence/frontend/*": [
+        "apps/frontend/src/*",
+        "apps/frontend/auth.ts",
+        "apps/frontend/middleware.ts"
+      ],
       "@skintelligence/backend/*": [
         "apps/backend/prisma/*",
         "apps/backend/src/*"

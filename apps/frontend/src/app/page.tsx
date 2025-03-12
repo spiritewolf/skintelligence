@@ -17,7 +17,7 @@ import { RocketIcon } from '@radix-ui/react-icons';
 import { useRouter } from 'next/navigation';
 import { ContentWrapper } from '../components/contentWrapper/contentWrapper';
 import classes from '../styles/hero1.module.css';
-import { GET_USERS } from './api/graphql/queries';
+import { GET_USERS } from './api/graphql/route';
 
 export default function Index() {
   const { data, loading, error } = useQuery(GET_USERS);

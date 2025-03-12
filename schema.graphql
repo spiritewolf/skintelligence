@@ -12,7 +12,8 @@ type Mutation {
 }
 
 type Query {
-  getUser(where: UserWhereInput!): User
+  user(where: UserWhereInput!): User
+  users: [User]
 }
 
 type Questionnaire {

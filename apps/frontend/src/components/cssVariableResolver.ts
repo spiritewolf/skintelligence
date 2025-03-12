@@ -8,15 +8,15 @@ export const shadcnCssVariableResolver: CSSVariablesResolver = () => ({
       'var(--mantine-primary-color-filled)',
       0.9
     ),
-    '--mantine-primary-color-light': 'var(--mantine-color-indigo-light)',
+    '--mantine-primary-color-light': 'var(--mantine-color-purple-light)',
     '--mantine-primary-color-light-hover':
-      'var(--mantine-color-indigo-light-hover)',
+      'var(--mantine-color-purple-light-hover)',
     '--mantine-primary-color-light-color':
-      'var(--mantine-color-indigo-light-color)',
+      'var(--mantine-color-purple-light-color)',
   },
   light: {
     // all variables that depend on light color scheme
-    '--mantine-primary-color-contrast': 'var(--mantine-color-indigo-0)', // used as primary color contrast
+    '--mantine-primary-color-contrast': 'var(--mantine-color-purple-0)', // used as primary color contrast
     '--mantine-color-text': 'var(--mantine-color-secondary-9)', // used as text color
     '--mantine-color-body': 'var(--mantine-color-white)', // used as body color
     '--mantine-color-error': 'var(--mantine-color-error-10)', // used as error color

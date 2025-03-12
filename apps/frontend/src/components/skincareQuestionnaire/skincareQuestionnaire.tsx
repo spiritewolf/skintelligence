@@ -13,7 +13,7 @@ import {
 } from '@mantine/core';
 import { Form, Formik } from 'formik';
 import { useState } from 'react';
-import { GET_USER } from '../../app/api/graphql/queries';
+import { GET_USER } from '../../app/api/graphql/route';
 import { ContentWrapper } from '../contentWrapper/contentWrapper';
 import { questionnaire } from './constants';
 
@@ -79,7 +79,7 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
             </Text>
           </Box>
           <Card shadow="sm" padding="lg" radius="md" withBorder mt={10}>
-            {!loading && !error && data.user.username ? (
+            {data.user && !loading && !error && data.user.username ? (
               <Text color="indigo">Hello, {data.user.username}</Text>
             ) : null}
             <Formik

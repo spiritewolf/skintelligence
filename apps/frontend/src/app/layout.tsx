@@ -1,11 +1,10 @@
 import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/notifications/styles.css';
+import { SkintelligenceProviders } from '../components/providers';
 import '../styles/fonts.css';
 import '../styles/globals.scss';
 import '../styles/style.css';
-import { ApolloWrapper } from './providers/ApolloProvider';
-import MantineProvider from './providers/MantineProvider';
 export const metadata = {
   title: 'Skintelligence',
   description: 'Some catchy line here.',
@@ -24,12 +23,10 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body>
-        <ApolloWrapper>
-          <MantineProvider>
-            <Notifications />
-            {children}
-          </MantineProvider>
-        </ApolloWrapper>
+        <SkintelligenceProviders>
+          <Notifications />
+          {children}
+        </SkintelligenceProviders>
       </body>
     </html>
   );

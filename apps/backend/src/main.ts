@@ -31,7 +31,7 @@ async function main() {
 
   app.listen(port, () => {
     console.log(
-      `🚀 Server ready at http://localhost:${port}/api${server.graphqlPath}`
+      `🚀 Server ready at http://localhost:${port}${server.graphqlPath}`
     );
   });
 }

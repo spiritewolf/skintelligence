@@ -15,9 +15,10 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { ContentWrapper } from '../../components/contentWrapper/contentWrapper';
-import { CREATE_USER } from '../api/graphql/queries';
+import { CREATE_USER } from '../api/graphql/route';
 
 type CreateUserFormData = {
   username: string;
@@ -26,6 +27,8 @@ type CreateUserFormData = {
 
 export default function GettingStarted() {
   const router = useRouter();
+  const { data: session } = useSession();
+
   const form = useForm<CreateUserFormData>({
     mode: 'uncontrolled',
     initialValues: {
@@ -33,6 +36,7 @@ export default function GettingStarted() {
       email: '',
     },
   });
+
   const [createUserMutation] = useMutation(CREATE_USER, {
     onCompleted: ({ createUser }) => {
       if (createUser) {
@@ -44,10 +48,12 @@ export default function GettingStarted() {
         router.push(`/get-started/questionnaire/${createUser.id}/`);
       }
     },
+    onError: (error) => console.log(error),
   });
 
   const onSubmit = async (data: CreateUserFormData) => {
-    createUserMutation({ variables: { data } });
+    // createUserMutation({ variables: { data } });
+    await signIn('credentials', { ...data });
   };
 
   return (
@@ -77,8 +83,8 @@ export default function GettingStarted() {
               <Paper
                 radius="md"
                 p="md"
-                bg="var(--mantine-primary-color-6)"
                 bd={' 1px solid rgba(255, 255, 255, 0.01) '}
+                bg="var(--mantine-primary-color-1)"
               >
                 <Stack>
                   <form onSubmit={form.onSubmit(onSubmit)}>

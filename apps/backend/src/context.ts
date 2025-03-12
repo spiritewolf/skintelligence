@@ -7,6 +7,7 @@ import { getToken, JWT } from 'next-auth/jwt';
 export type Context = {
   prismaDb: PrismaClient;
   session: JWT | null;
+  res: NextApiResponse;
 };
 
 export async function createContext({
@@ -23,5 +24,6 @@ export async function createContext({
   return {
     prismaDb: SkintelligenceDb,
     session: token,
+    res,
   };
 }
