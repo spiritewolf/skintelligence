@@ -1,4 +1,4 @@
-import { SkincareQuestionnaire } from '../../../../components/skincareQuestionnaire/skincareQuestionnaire';
+import { SkincareQuestionnaire } from '@/skintelligence/frontend/components/skincareQuestionnaire';
 
 export default async function Questionnaire({
   params,

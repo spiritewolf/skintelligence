@@ -1,0 +1,1 @@
+export { SkincareQuestionnaire } from './skincareQuestionnaire';

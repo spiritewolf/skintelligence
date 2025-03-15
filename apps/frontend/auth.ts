@@ -1,4 +1,4 @@
-import NextAuth, { AuthOptions } from 'next-auth';
+import { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { CREATE_USER } from './src/app/api/graphql/route';
 import client from './src/lib/clients/apollo';
@@ -66,9 +66,12 @@ export const authOptions: AuthOptions = {
 
       return session;
     },
+    // async signIn({user}) {
+
+    // }
   },
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: '/get-started',
+  },
 };
-
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };

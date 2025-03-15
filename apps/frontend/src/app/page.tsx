@@ -1,10 +1,10 @@
 'use client';
 
-import { useQuery } from '@apollo/client';
 import {
   Box,
   Button,
   Container,
+  Flex,
   Grid,
   Group,
   Paper,
@@ -14,13 +14,14 @@ import {
   Title,
 } from '@mantine/core';
 import { RocketIcon } from '@radix-ui/react-icons';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ContentWrapper } from '../components/contentWrapper/contentWrapper';
 import classes from '../styles/hero1.module.css';
-import { GET_USERS } from './api/graphql/route';
+
+import womanScientist from '@/skintelligence/frontend/public/images/undraw_scientist_5td0.svg';
 
 export default function Index() {
-  const { data, loading, error } = useQuery(GET_USERS);
   const router = useRouter();
   return (
     <ContentWrapper>
@@ -78,7 +79,16 @@ export default function Index() {
                 p="xl"
                 bg={'rgba(255, 255, 255, 0.1)'}
                 bd={' 1px solid rgba(255, 255, 255, 0.1) '}
-              ></Paper>
+              >
+                <Flex justify="center" align="center">
+                  <Image
+                    src={womanScientist}
+                    alt="Woman Formulating"
+                    width={350}
+                    height={350}
+                  />
+                </Flex>
+              </Paper>
             </Grid.Col>
           </Grid>
         </Container>

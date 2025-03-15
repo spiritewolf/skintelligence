@@ -13,6 +13,7 @@ import {
   Title,
 } from '@mantine/core';
 import { Form, Formik } from 'formik';
+import { signOut } from 'next-auth/react';
 import { useState } from 'react';
 import { GET_USER } from '../../app/api/graphql/route';
 import { ContentWrapper } from '../contentWrapper/contentWrapper';
@@ -60,6 +61,7 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
     <ContentWrapper>
       <Box w="100%">
         <Container size="xl" py={120}>
+          <Button onClick={() => signOut()}>SignOut</Button>
           {loading || !data ? (
             <LoadingOverlay
               visible={loading}

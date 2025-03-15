@@ -21,10 +21,17 @@
       }
     ],
     "baseUrl": ".",
-    "types": ["jest", "node", "next-auth", "next-auth/jwt"],
+    "types": ["jest", "node", "next-auth"],
     "target": "ES2017",
     "skipLibCheck": true,
     "paths": {
+      "@/skintelligence/frontend/app/*": ["./src/app/*"],
+      "@/skintelligence/frontend/components/*": ["./src/components/*"],
+      "@/skintelligence/frontend/lib/*": ["./src/lib/*"],
+      "@/skintelligence/frontend/assets/*": ["./src/assets/*"],
+      "@/skintelligence/frontend/styles/*": ["./src/styles/*"],
+      "@/skintelligence/frontend/types/*": ["./types/*"],
+      "@/skintelligence/frontend/public/*": ["./public/*"],
       "@/*": ["./*"]
     }
   },
@@ -36,7 +43,7 @@
     "../../dist/frontend/.next/types/**/*.ts",
     "../../frontend/.next/types/**/*.ts",
     "next-env.d.ts",
-    "next-auth.d.ts",
+    "types/next-auth.d.ts",
     ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules", "jest.config.ts", "**/*.spec.ts", "**/*.test.ts"]
