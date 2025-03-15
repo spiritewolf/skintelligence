@@ -1,6 +1,6 @@
 'use client';
 
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   Box,
   Button,
@@ -15,7 +15,10 @@ import {
 import { Form, Formik } from 'formik';
 import { signOut } from 'next-auth/react';
 import { useState } from 'react';
-import { GET_USER } from '../../app/api/graphql/route';
+import {
+  GET_USER,
+  SUBMIT_RESPONSES_FOR_RECOMMENDATION,
+} from '../../app/api/graphql/route';
 import { ContentWrapper } from '../contentWrapper/contentWrapper';
 import { questionnaire } from './constants';
 
@@ -52,9 +55,16 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
   };
 
   const handleBack = () => setCurrentStep(currentStep - 1);
+  const [getRecommendations] = useMutation(SUBMIT_RESPONSES_FOR_RECOMMENDATION);
 
-  const handleSubmit = (values: QuestionnaireResponse) => {
-    return;
+  const onSubmit = async (values: QuestionnaireResponse) => {
+    if (values) {
+      await getRecommendations({
+        variables: {
+          data: { responses: values.responses },
+        },
+      });
+    }
   };
 
   return (
@@ -107,8 +117,8 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
                 <Formik
                   initialValues={initialValues}
                   onSubmit={(values) => {
+                    onSubmit(values);
                     console.log('Final questionnaire values:', values);
-                    // You can handle submission (e.g., sending to an API) here.
                   }}
                 >
                   {({ values, setFieldValue, handleSubmit }) => {

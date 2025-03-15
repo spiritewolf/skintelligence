@@ -9,6 +9,7 @@ input CreateUserInput {
 
 type Mutation {
   createUser(data: CreateUserInput!): User!
+  submitResponsesForRecommendation(data: SubmitResponsesForRecommendationData!): SkincareRecommendation!
 }
 
 type Query {
@@ -16,15 +17,8 @@ type Query {
   users: [User]
 }
 
-type Questionnaire {
-  id: ID!
-  responses: [QuestionnaireResponse!]
-  userId: ID!
-}
-
-type QuestionnaireResponse {
+input QuestionnaireResponse {
   answer: String!
-  id: ID!
   questionId: String!
 }
 
@@ -33,6 +27,21 @@ type Session {
   id: ID!
   token: String!
   userId: ID!
+}
+
+type SkincareProduct {
+  description: String!
+  link: String
+  name: String!
+}
+
+type SkincareRecommendation {
+  cleanser: SkincareProduct!
+  serum: SkincareProduct!
+}
+
+input SubmitResponsesForRecommendationData {
+  responses: [QuestionnaireResponse!]!
 }
 
 type User {

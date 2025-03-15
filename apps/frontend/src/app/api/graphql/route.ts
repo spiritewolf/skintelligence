@@ -19,6 +19,25 @@ export const GET_USER = gql`
   }
 `;
 
+export const SUBMIT_RESPONSES_FOR_RECOMMENDATION = gql`
+  mutation SubmitResponsesForRecommendation(
+    $data: SubmitResponsesForRecommendationData!
+  ) {
+    submitResponsesForRecommendation(data: $data) {
+      cleanser {
+        name
+        description
+        link
+      }
+      serum {
+        name
+        description
+        link
+      }
+    }
+  }
+`;
+
 export const CREATE_USER = gql`
   mutation CreateUser($data: CreateUserInput!) {
     createUser(data: $data) {

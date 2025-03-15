@@ -1,7 +1,9 @@
 import bcrypt from 'bcryptjs';
+import { spawn } from 'child_process';
 import jwt from 'jsonwebtoken';
 import { extendType, inputObjectType, nonNull, objectType } from 'nexus';
 import { setCookie } from 'nookies';
+import path from 'path';
 import { Context } from '../context';
 const SECRET_KEY = process.env.NEXTAUTH_SECRET || 'super-secret-key';
 
@@ -25,19 +27,18 @@ export const Session = objectType({
   },
 });
 
-export const Questionnaire = objectType({
-  name: 'Questionnaire',
-  definition(t) {
-    t.nonNull.id('id');
-    t.nonNull.id('userId');
-    t.nullable.list.nonNull.field('responses', { type: QuestionnaireResponse });
-  },
-});
+// export const Questionnaire = objectType({
+//   name: 'Questionnaire',
+//   definition(t) {
+//     t.nonNull.id('id');
+//     t.nonNull.id('userId');
+//     t.nullable.list.nonNull.field('responses', { type: QuestionnaireResponse });
+//   },
+// });
 
-export const QuestionnaireResponse = objectType({
+export const QuestionnaireResponse = inputObjectType({
   name: 'QuestionnaireResponse',
   definition(t) {
-    t.nonNull.id('id');
     t.nonNull.string('questionId');
     t.nonNull.string('answer');
   },
@@ -128,6 +129,74 @@ export const UserMutations = extendType({
         });
 
         return user;
+      },
+    });
+  },
+});
+
+export const SubmitResponsesForRecommendationData = inputObjectType({
+  name: 'SubmitResponsesForRecommendationData',
+  definition(t) {
+    t.nonNull.list.nonNull.field('responses', { type: QuestionnaireResponse });
+  },
+});
+
+export const SkincareProduct = objectType({
+  name: 'SkincareProduct',
+  definition(t) {
+    t.nonNull.string('name');
+    t.nonNull.string('description');
+    t.nullable.string('link');
+  },
+});
+
+export const SkincareRecommendation = objectType({
+  name: 'SkincareRecommendation',
+  definition(t) {
+    t.nonNull.field('cleanser', { type: SkincareProduct });
+    t.nonNull.field('serum', { type: SkincareProduct });
+  },
+});
+
+type ScriptResult = {
+  results: JSON;
+  message: string;
+};
+
+export const SkincareQuestionnaireMutations = extendType({
+  type: 'Mutation',
+  definition(t) {
+    t.field('submitResponsesForRecommendation', {
+      type: nonNull(SkincareRecommendation),
+      args: { data: nonNull(SubmitResponsesForRecommendationData) },
+      resolve: async (_parent, { data }, _ctx: Context) => {
+        const pythonScriptPath = path.resolve(
+          process.cwd(),
+          'apps/backend/services/app.py'
+        );
+
+        const responses = data?.responses
+          .map((r: { questionId: string; answer: string }) => r.answer)
+          .join(' ');
+
+        const python = spawn('python3', [pythonScriptPath, responses]);
+
+        let recommendationData = '';
+        python.stdout.on(
+          'data',
+          (chunk) => (recommendationData += chunk.toString())
+        );
+        python.stderr.on('data', (err) =>
+          console.log('ERROR:', err.toString())
+        );
+        python.on('close', () =>
+          console.log('DATA:', recommendationData.trim())
+        );
+
+        return {
+          cleanser: { name: 'Idk', description: 'Idk' },
+          serum: { name: 'Idk', description: 'Idk' },
+        };
       },
     });
   },

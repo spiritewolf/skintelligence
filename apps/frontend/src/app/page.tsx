@@ -19,7 +19,7 @@ import { useRouter } from 'next/navigation';
 import { ContentWrapper } from '../components/contentWrapper/contentWrapper';
 import classes from '../styles/hero1.module.css';
 
-import womanScientist from '@/skintelligence/frontend/public/images/undraw_scientist_5td0.svg';
+import skincareImg from '@/skintelligence/frontend/public/images/Skincare-amico.svg';
 
 export default function Index() {
   const router = useRouter();
@@ -82,7 +82,7 @@ export default function Index() {
               >
                 <Flex justify="center" align="center">
                   <Image
-                    src={womanScientist}
+                    src={skincareImg}
                     alt="Woman Formulating"
                     width={350}
                     height={350}

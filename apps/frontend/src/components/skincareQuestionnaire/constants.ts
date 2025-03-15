@@ -48,8 +48,8 @@ export const questionnaire: SkincareQuestion[] = [
     options: [
       { label: '10 or more', value: 'acne' },
       { label: 'Around 4-6', value: 'acne' },
-      { label: 'Just a few', value: '' },
-      { label: 'Very few or none at all', value: '' },
+      { label: 'Just a few', value: 'few' },
+      { label: 'Very few or none at all', value: 'none' },
     ],
   },
   {
@@ -59,8 +59,8 @@ export const questionnaire: SkincareQuestion[] = [
     options: [
       { label: 'I experience multiple of those daily', value: 'sensitive' },
       { label: 'I experience at least one of those daily', value: 'sensitive' },
-      { label: 'I experience some of those occasionally', value: '' },
-      { label: 'I rarely or never experience those', value: '' },
+      { label: 'I experience some of those occasionally', value: 'rarely' },
+      { label: 'I rarely or never experience those', value: 'rarely' },
     ],
   },
   {
@@ -80,8 +80,8 @@ export const questionnaire: SkincareQuestion[] = [
     question: 'How often do you wear sunscreen?',
     questionId: '6',
     options: [
-      { label: 'Daily, with multiple reapplications', value: '' },
-      { label: 'Daily, but I forget to reapply', value: '' },
+      { label: 'Daily, with multiple reapplications', value: 'daily' },
+      { label: 'Daily, but I forget to reapply', value: 'daily' },
       { label: `Only when I need to or when I'm in the sun`, value: 'sun' },
       { label: 'Rarely, if ever', value: 'sun' },
     ],
