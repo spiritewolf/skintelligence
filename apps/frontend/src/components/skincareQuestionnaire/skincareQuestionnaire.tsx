@@ -32,6 +32,7 @@ type QuestionnaireResponse = {
 export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const isLastStep = currentStep === questionnaire.length - 1;
+  // const router = useRouter();
 
   const initialValues: QuestionnaireResponse = {
     responses: questionnaire.map((q) => ({
@@ -55,13 +56,22 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
   };
 
   const handleBack = () => setCurrentStep(currentStep - 1);
-  const [getRecommendations] = useMutation(SUBMIT_RESPONSES_FOR_RECOMMENDATION);
+  const [getRecommendations] = useMutation(
+    SUBMIT_RESPONSES_FOR_RECOMMENDATION,
+    {
+      onCompleted: (res) => {
+        if (res) {
+          console.log('res', res);
+        }
+      },
+    }
+  );
 
   const onSubmit = async (values: QuestionnaireResponse) => {
     if (values) {
       await getRecommendations({
         variables: {
-          data: { responses: values.responses },
+          data: { responses: values.responses, userId },
         },
       });
     }

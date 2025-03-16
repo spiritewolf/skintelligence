@@ -29,19 +29,30 @@ type Session {
   userId: ID!
 }
 
+enum SkincareCategoryEnum {
+  CLEANSER
+  MOISTURIZER
+  SERUM
+  SUNSCREEN
+}
+
 type SkincareProduct {
+  category: SkincareCategoryEnum!
   description: String!
+  id: ID!
   link: String
   name: String!
 }
 
 type SkincareRecommendation {
-  cleanser: SkincareProduct!
-  serum: SkincareProduct!
+  id: ID!
+  products: [SkincareProduct!]!
+  userId: ID!
 }
 
 input SubmitResponsesForRecommendationData {
   responses: [QuestionnaireResponse!]!
+  userId: ID!
 }
 
 type User {

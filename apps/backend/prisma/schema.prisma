@@ -24,6 +24,8 @@ model User {
   sessions Session[]
 
   questionnaire Questionnaire[]
+
+  skincareRecommendation SkincareRecommendation[]
 }
 
 model Session {
@@ -59,4 +61,34 @@ model QuestionnaireResponse {
 
   questionnaireId String        @db.Uuid
   questionnaire   Questionnaire @relation(fields: [questionnaireId], references: [id])
+}
+
+model SkincareProduct {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name        String
+  description String
+  link        String?
+
+  brand              String?
+  concerns           String[] //ensum ACNE, HYDRATION, DARK SPOTS, ETC
+  recommendationNote String?
+
+  category String //enum CLEANSER, MOISTURIZER, SERUM, SUNSCREEN
+
+  recommendationId String                 @db.Uuid
+  recommendation   SkincareRecommendation @relation(fields: [recommendationId], references: [id])
+}
+
+model SkincareRecommendation {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id])
+
+  products SkincareProduct[]
 }

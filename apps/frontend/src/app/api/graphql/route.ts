@@ -24,15 +24,13 @@ export const SUBMIT_RESPONSES_FOR_RECOMMENDATION = gql`
     $data: SubmitResponsesForRecommendationData!
   ) {
     submitResponsesForRecommendation(data: $data) {
-      cleanser {
+      id
+      userId
+      products {
         name
         description
         link
-      }
-      serum {
-        name
-        description
-        link
+        category
       }
     }
   }

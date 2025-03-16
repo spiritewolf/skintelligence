@@ -24,37 +24,37 @@ def cosine_similarity_of(text1, text2):
 
     return int((dot_product / (magnitude1 * magnitude2)) * 100) if magnitude1 and magnitude2 else 0
 
-def get_recommendations(keywords):
+def get_recommendations(keywords: str) -> list:
     """
-    Read product data from CSV, compute similarity scores between
-    each product's 'goals' and the keywords, and return a JSON string
+    Reads product data from CSV, computes similarity scores, and returns a structured dictionary
     containing the top recommendation per category.
     """
-    script_dir = os.path.dirname(os.path.abspath(__file__))  # Get script directory
+    # Locate CSV file dynamically
+    script_dir = os.path.dirname(os.path.abspath(__file__))
     csv_path = os.path.join(script_dir, "data.csv")
-    
+
+    # Load data
     df = pd.read_csv(csv_path)
-    
-    categories = ["cleanser", "serum", "moisturizer", "sunscreen"]
+    categories = ["CLEANSER", "SERUM", "MOISTURIZER", "SUNSCREEN"]
 
     # Compute similarity scores
-    df["score"] = df["goals"].apply(lambda x: cosine_similarity_of(x, keywords))
+    df["score"] = df["goals"].astype(str).apply(lambda x: cosine_similarity_of(x, keywords))
 
     # Filter products with scores > 30 and pick the top 15 overall
     filtered_df = df[df["score"] > 30].nlargest(15, "score")
 
     # Extract the top recommended product per category
-    recommendations = {}
+    recommendations = []
     for category in categories:
         cat_df = filtered_df[filtered_df["category"] == category]
         if not cat_df.empty:
             top_product = cat_df.loc[cat_df["score"].idxmax()]
-            recommendations[category] = {
-                "name": top_product["name"],
-                "description": top_product["details"],
+            rec = {
+                "name": top_product.get("name", "Unknown"),
+                "description": top_product.get("details", "No details available"),
+                "category": category
             }
-        else:
-            recommendations[category] = None  # No recommendation for this category
+            recommendations.append(rec)
 
     return recommendations
 
@@ -79,5 +79,6 @@ def start(keywords):
     on keywords and return a formatted dictionary of results.
     """
     recommendations = get_recommendations(keywords)
+    # print(f"Here are the recommendations {recommendations}")
     # final_result = get_results(recommendations_json)
     return recommendations
