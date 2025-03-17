@@ -60,9 +60,12 @@ next-env.d.ts
 .next
 out
 
-# python
- __pycache__/
- .venv/
- venv/
- apps/backend/services/venv/
- apps/backend/services/__pycache__/
+# Ignore Virtual Environments
+venv/
+.venv/
+env/
+apps/backend/services/venv/
+
+# Ignore Compiled Python Files
+__pycache__/
+apps/backend/services/__pycache__/
