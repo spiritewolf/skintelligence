@@ -35,6 +35,7 @@
     "formik": "^2.4.6",
     "graphql": "^16.10.0",
     "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
     "next": "~15.1.4",
     "next-auth": "^4.24.11",
     "nookies": "^2.5.2",

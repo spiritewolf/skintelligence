@@ -13,7 +13,7 @@ import {
   Title,
 } from '@mantine/core';
 import { Form, Formik } from 'formik';
-import { signOut } from 'next-auth/react';
+import { isEmpty } from 'lodash';
 import { useState } from 'react';
 import {
   GET_USER,
@@ -48,12 +48,14 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
   });
 
   const handleNext = (values: QuestionnaireResponse) => {
-    if (!values.responses[currentStep].answer) {
+    console.log('values: ', values, isLastStep, currentStep);
+    if (isEmpty(values.responses[currentStep].answer)) {
       alert('Please select an answer');
       return;
     }
     setCurrentStep(currentStep + 1);
   };
+  console.log('isLastStep', isLastStep);
 
   const handleBack = () => setCurrentStep(currentStep - 1);
   const [getRecommendations] = useMutation(
@@ -81,7 +83,6 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
     <ContentWrapper>
       <Box w="100%">
         <Container size="xl" py={120}>
-          <Button onClick={() => signOut()}>SignOut</Button>
           {loading || !data ? (
             <LoadingOverlay
               visible={loading}
@@ -127,7 +128,9 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
                 <Formik
                   initialValues={initialValues}
                   onSubmit={(values) => {
-                    onSubmit(values);
+                    if (!values.responses.some((r) => r.answer === '')) {
+                      onSubmit(values);
+                    }
                     console.log('Final questionnaire values:', values);
                   }}
                 >
@@ -164,21 +167,20 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
                             justifyContent: 'space-between',
                           }}
                         >
-                          {currentStep > 0 && (
+                          {currentStep > 0 ? (
                             <Button variant="default" onClick={handleBack}>
                               Back
                             </Button>
-                          )}
-                          {isLastStep ? (
-                            <Button type="submit">Submit</Button>
-                          ) : (
-                            <Button
-                              type="button"
-                              onClick={() => handleNext(values)}
-                            >
+                          ) : null}
+                          {currentStep >= 0 &&
+                          currentStep !== questionnaire.length - 1 ? (
+                            <Button onClick={() => handleNext(values)}>
                               Next
                             </Button>
-                          )}
+                          ) : null}
+                          {isLastStep ? (
+                            <Button type="submit">Submit</Button>
+                          ) : null}
                         </div>
                       </Form>
                     );

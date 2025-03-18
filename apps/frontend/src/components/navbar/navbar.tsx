@@ -1,10 +1,33 @@
 'use client';
 
-import { AppShell, Container, NavLink, Title } from '@mantine/core';
-import { HomeIcon } from '@radix-ui/react-icons';
+import {
+  AppShell,
+  Burger,
+  Container,
+  Flex,
+  Group,
+  NavLink,
+  Title,
+} from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { HomeIcon, LightningBoltIcon } from '@radix-ui/react-icons';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
+
+const navItems = [
+  { icon: HomeIcon, label: 'Home', href: '/' },
+  {
+    icon: LightningBoltIcon,
+    label: 'About',
+    href: '/',
+    description: 'Coming Soon',
+  },
+];
 
 export const Navbar = ({ children }: { children: React.ReactNode }) => {
+  const [isMobileOpen, { toggle: toggleMobile }] = useDisclosure();
+  const [isDesktopOpen, { toggle: toggleDesktop }] = useDisclosure(true);
+  const [isActive, setIsActive] = useState(0);
   const pathname = usePathname();
   return (
     <AppShell
@@ -12,11 +35,16 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
       header={{ height: '52px' }}
       styles={(theme) => ({
         main: {
-          backgroundColor: theme.colors.dark[8],
+          backgroundColor: theme.colors.violet[0],
         },
       })}
+      navbar={{
+        width: 300,
+        breakpoint: 'sm',
+        collapsed: { mobile: !isMobileOpen, desktop: !isDesktopOpen },
+      }}
     >
-      <AppShell.Header h={60} p="md">
+      <AppShell.Header>
         <Container
           fluid
           style={{
@@ -25,18 +53,49 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
             alignItems: 'center',
           }}
         >
-          <Title order={3}>Skintelligence</Title>
-          <div style={{ display: 'flex', gap: '1rem' }}>
-            <NavLink
-              href="/"
-              label="Home"
-              active={pathname === '/'}
-              leftSection={<HomeIcon />}
+          <Group>
+            <Burger
+              opened={isMobileOpen}
+              onClick={toggleMobile}
+              hiddenFrom="sm"
+              size="sm"
             />
-          </div>
+            <Burger
+              opened={isDesktopOpen}
+              onClick={toggleDesktop}
+              visibleFrom="sm"
+              size="sm"
+            />
+            <Title size="md">Skintelligence</Title>
+          </Group>
+          <Flex direction="row">
+            {navItems.map((item, index) => (
+              <NavLink
+                href={item.href}
+                key={item.label}
+                active={index === isActive}
+                label={item.label}
+                leftSection={<item.icon />}
+                onClick={() => setIsActive(index)}
+              />
+            ))}
+          </Flex>
         </Container>
       </AppShell.Header>
-      {children}
+      <AppShell.Navbar>
+        {navItems.map((item, index) => (
+          <NavLink
+            href="#required-for-focus"
+            key={item.label}
+            active={index === isActive}
+            label={item.label}
+            description={item.description}
+            leftSection={<item.icon />}
+            onClick={() => setIsActive(index)}
+          />
+        ))}
+      </AppShell.Navbar>
+      <AppShell.Main w="100%">{children}</AppShell.Main>
     </AppShell>
   );
 };

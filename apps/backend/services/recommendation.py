@@ -1,77 +1,56 @@
 import json
 import os
 import re
-import math
+import logging
 import pandas as pd
 from collections import Counter
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 
 
-def cosine_similarity_of(text1, text2):
-    """
-    Compute cosine similarity between two text strings, returning
-    the similarity as an integer percentage.
-    """
-    # Normalize and tokenize the texts
-    tokens1 = re.findall(r"[\w']+", text1.lower())
-    tokens2 = re.findall(r"[\w']+", text2.lower())
+# Compute TF-IDF cosine similarity
+def compute_similarity(keywords: str, goals_list: list):
+    print(f"Made it here")
+    try:
+        vectorizer = TfidfVectorizer()
+        tfidf_matrix = vectorizer.fit_transform([keywords] + goals_list)
+        cosine_similarities = cosine_similarity(
+            tfidf_matrix[0:1], tfidf_matrix[1:]
+        ).flatten()
+        return cosine_similarities
+    except Exception as e:
+        logging.error(f"Error computing similarity: {e}")
+        return [0] * len(goals_list)
 
-    vector1, vector2 = Counter(tokens1), Counter(tokens2)
-    common_tokens = set(vector1) & set(vector2)
-    dot_product = sum(vector1[token] * vector2[token] for token in common_tokens)
 
-    magnitude1 = math.sqrt(sum(count**2 for count in vector1.values()))
-    magnitude2 = math.sqrt(sum(count**2 for count in vector2.values()))
-
-    return int((dot_product / (magnitude1 * magnitude2)) * 100) if magnitude1 and magnitude2 else 0
-
+# Get recommendations using TF-IDF and cosine similarity
 def get_recommendations(keywords: str) -> list:
-    """
-    Reads product data from CSV, computes similarity scores, and returns a structured dictionary
-    containing the top recommendation per category.
-    """
-    # Locate CSV file dynamically
     script_dir = os.path.dirname(os.path.abspath(__file__))
     csv_path = os.path.join(script_dir, "data.csv")
-
-    # Load data
     df = pd.read_csv(csv_path)
     categories = ["CLEANSER", "SERUM", "MOISTURIZER", "SUNSCREEN"]
 
-    # Compute similarity scores
-    df["score"] = df["goals"].astype(str).apply(lambda x: cosine_similarity_of(x, keywords))
+    df["score"] = compute_similarity(keywords, df["goals"].astype(str).tolist())
 
-    # Filter products with scores > 30 and pick the top 15 overall
-    filtered_df = df[df["score"] > 30].nlargest(15, "score")
-
-    # Extract the top recommended product per category
     recommendations = []
     for category in categories:
-        cat_df = filtered_df[filtered_df["category"] == category]
+        cat_df = df[df["category"] == category].nlargest(1, "score")
         if not cat_df.empty:
-            top_product = cat_df.loc[cat_df["score"].idxmax()]
-            rec = {
-                "name": top_product.get("name", "Unknown"),
-                "description": top_product.get("details", "No details available"),
-                "category": category
-            }
-            recommendations.append(rec)
-
+            top_product = cat_df.iloc[0]
+            recommendations.append(
+                {
+                    "name": top_product.get("name", "Unknown"),
+                    "description": top_product.get("details", "No details available"),
+                    "category": category,
+                }
+            )
+        print(f"Category {category}, recommendations {recommendations}")
     return recommendations
 
-def get_results(json_string):
-    """
-    Parse the JSON string of recommendations and build a dictionary
-    mapping each category to its top product's name and details.
-    """
-    recommendations_list = json.loads(json_string)
-    results = {'cleanser': [], 'serum': [], 'moisturizer': [], 'sunscreen': []}
-    
-    for item in recommendations_list:
-        cat = item.get('category')
-        if cat in results:
-            results[cat] = [item.get('name'), item.get('details')]
-    
-    return results
 
 def start(keywords):
     """
