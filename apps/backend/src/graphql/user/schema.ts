@@ -1,6 +1,10 @@
 import { extendType, nonNull, objectType } from 'nexus';
-import { CreateUserInput, UserWhereInput } from './input';
-import { createUserResolver, getUserResolver } from './resolvers';
+import { CreateUserInput } from './input';
+import {
+  createUserResolver,
+  getUserResolver,
+  getUserSessionResolver,
+} from './resolvers';
 
 export const User = objectType({
   name: 'User',
@@ -8,7 +12,10 @@ export const User = objectType({
     t.nonNull.id('id');
     t.nonNull.string('username');
     t.nullable.string('email');
-    t.nonNull.list.nonNull.field('sessions', { type: Session });
+    t.nonNull.field('session', {
+      type: Session,
+      resolve: getUserSessionResolver,
+    });
   },
 });
 
@@ -33,7 +40,6 @@ export const UserQueries = extendType({
     });
     t.field('user', {
       type: User,
-      args: { where: nonNull(UserWhereInput) },
       resolve: getUserResolver,
     });
   },

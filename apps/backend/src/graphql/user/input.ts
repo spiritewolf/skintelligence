@@ -14,3 +14,10 @@ export const UserWhereInput = inputObjectType({
     t.nonNull.id('id');
   },
 });
+
+export const SessionTokenWhereInput = inputObjectType({
+  name: 'SessionTokenWhereInput',
+  definition(t) {
+    t.nonNull.id('id');
+  },
+});

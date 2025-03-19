@@ -8,6 +8,7 @@ export type Context = {
   prismaDb: PrismaClient;
   session: JWT | null;
   res: NextApiResponse;
+  req: NextApiRequest;
 };
 
 export async function createContext({
@@ -25,5 +26,6 @@ export async function createContext({
     prismaDb: SkintelligenceDb,
     session: token,
     res,
+    req,
   };
 }

@@ -85,7 +85,7 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
       <AppShell.Navbar>
         {navItems.map((item, index) => (
           <NavLink
-            href="#required-for-focus"
+            href={item.href}
             key={item.label}
             active={index === isActive}
             label={item.label}

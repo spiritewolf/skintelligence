@@ -5,16 +5,41 @@ export const GET_USERS = gql`
     users {
       id
       username
+      session {
+        id
+        expiresAt
+        token
+      }
     }
   }
 `;
 
 export const GET_USER = gql`
-  query GetUser($where: UserWhereInput!) {
-    user(where: $where) {
+  query GetUser {
+    user {
       id
       username
       email
+      session {
+        id
+        expiresAt
+        token
+      }
+    }
+  }
+`;
+
+export const VALIDATE_TOKEN = gql`
+  query ValidateToken($where: SessionTokenWhereInput!) {
+    validateToken(where: $where) {
+      id
+      username
+      email
+      session {
+        id
+        expiresAt
+        token
+      }
     }
   }
 `;
@@ -42,6 +67,11 @@ export const CREATE_USER = gql`
       id
       username
       email
+      session {
+        id
+        expiresAt
+        token
+      }
     }
   }
 `;

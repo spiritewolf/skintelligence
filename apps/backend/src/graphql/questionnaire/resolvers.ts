@@ -23,6 +23,7 @@ export const submitResponsesForRecommendationResolver: FieldResolver<
       userId: data.userId,
     },
   });
+
   const skincareProductCreateData = products.map((product) => ({
     ...product,
     category: product.category as SkincareCategory,

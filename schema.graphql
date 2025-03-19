@@ -13,7 +13,7 @@ type Mutation {
 }
 
 type Query {
-  user(where: UserWhereInput!): User
+  user: User
   users: [User]
 }
 
@@ -27,6 +27,10 @@ type Session {
   id: ID!
   token: String!
   userId: ID!
+}
+
+input SessionTokenWhereInput {
+  id: ID!
 }
 
 enum SkincareCategoryEnum {
@@ -58,7 +62,7 @@ input SubmitResponsesForRecommendationData {
 type User {
   email: String
   id: ID!
-  sessions: [Session!]!
+  session: Session!
   username: String!
 }
 

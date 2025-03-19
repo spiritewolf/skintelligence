@@ -14,6 +14,7 @@ import {
 } from '@mantine/core';
 import { Form, Formik } from 'formik';
 import { isEmpty } from 'lodash';
+import { signOut } from 'next-auth/react';
 import { useState } from 'react';
 import {
   GET_USER,
@@ -32,6 +33,7 @@ type QuestionnaireResponse = {
 export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const isLastStep = currentStep === questionnaire.length - 1;
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   // const router = useRouter();
 
   const initialValues: QuestionnaireResponse = {
@@ -41,11 +43,7 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
     })),
   };
 
-  const { data, loading, error } = useQuery(GET_USER, {
-    variables: {
-      where: { id: userId },
-    },
-  });
+  const { data, loading: isGetUserLoading, error } = useQuery(GET_USER);
 
   const handleNext = (values: QuestionnaireResponse) => {
     console.log('values: ', values, isLastStep, currentStep);
@@ -55,7 +53,6 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
     }
     setCurrentStep(currentStep + 1);
   };
-  console.log('isLastStep', isLastStep);
 
   const handleBack = () => setCurrentStep(currentStep - 1);
   const [getRecommendations] = useMutation(
@@ -71,6 +68,7 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
 
   const onSubmit = async (values: QuestionnaireResponse) => {
     if (values) {
+      setIsSubmitting(true);
       await getRecommendations({
         variables: {
           data: { responses: values.responses, userId },
@@ -79,13 +77,16 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
     }
   };
 
+  const combinedIsLoading = isGetUserLoading || isSubmitting;
+
   return (
     <ContentWrapper>
       <Box w="100%">
-        <Container size="xl" py={120}>
-          {loading || !data ? (
+        <Container size="xl">
+          <Button onClick={() => signOut()}>LogOut</Button>
+          {combinedIsLoading || !data ? (
             <LoadingOverlay
-              visible={loading}
+              visible={combinedIsLoading}
               zIndex={1000}
               overlayProps={{ radius: 'sm', blur: 2 }}
             />
@@ -120,7 +121,7 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
               <Card shadow="sm" padding="lg" radius="md" withBorder mt={10}>
                 {data &&
                 data.user &&
-                !loading &&
+                !combinedIsLoading &&
                 !error &&
                 data.user.username ? (
                   <Text color="indigo">Hello, {data.user.username}</Text>
@@ -168,18 +169,27 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
                           }}
                         >
                           {currentStep > 0 ? (
-                            <Button variant="default" onClick={handleBack}>
+                            <Button
+                              variant="default"
+                              onClick={handleBack}
+                              disabled={isSubmitting}
+                            >
                               Back
                             </Button>
                           ) : null}
                           {currentStep >= 0 &&
                           currentStep !== questionnaire.length - 1 ? (
-                            <Button onClick={() => handleNext(values)}>
+                            <Button
+                              onClick={() => handleNext(values)}
+                              disabled={isSubmitting}
+                            >
                               Next
                             </Button>
                           ) : null}
                           {isLastStep ? (
-                            <Button type="submit">Submit</Button>
+                            <Button type="submit" disabled={isSubmitting}>
+                              Submit
+                            </Button>
                           ) : null}
                         </div>
                       </Form>

@@ -1,6 +1,7 @@
 'use client';
 
 import { ContentWrapper } from '@/skintelligence/frontend/components/contentWrapper';
+import { useMutation } from '@apollo/client';
 import {
   Box,
   Button,
@@ -17,7 +18,7 @@ import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { CREATE_USER } from '../../app/api/graphql/route';
 
 type CreateUserFormData = {
   username: string;
@@ -40,29 +41,49 @@ export function GettingStartedForm() {
     },
   });
 
+  const [createUser] = useMutation(CREATE_USER, {
+    onCompleted: (res) => {
+      if (res && res.createUser) {
+        const user = res.createUser;
+        console.log('res', res);
+        signIn('credentials', {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          redirect: false,
+        }).then((res) => {
+          if (res?.ok) {
+            notifications.show({
+              title: 'Success!',
+              message:
+                'Thanks for that info! Lets set up your skincare routine.',
+              color: 'violet',
+            });
+            router.push(`/skincare-questionnaire/${user?.id}/`);
+          }
+        });
+      }
+    },
+    onError: (error) => {
+      notifications.show({
+        title: 'Error',
+        message: 'Your user could not be created.',
+        color: 'red',
+      });
+    },
+  });
+
   const onSubmit = async (data: CreateUserFormData) => {
     const { username, email } = data;
-
-    const res = await signIn('credentials', {
-      username,
-      email,
-      redirect: false,
+    createUser({
+      variables: {
+        data: {
+          username,
+          email,
+        },
+      },
     });
-
-    if (res?.ok) {
-      notifications.show({
-        title: 'Success!',
-        message: 'Your user has been created.',
-        color: 'violet',
-      });
-    }
   };
-
-  useEffect(() => {
-    if (session?.user.id) {
-      router.push(`/skincare-questionnaire/${session?.user?.id}/`);
-    }
-  }, [router, session]);
 
   return (
     <ContentWrapper>

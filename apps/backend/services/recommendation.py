@@ -14,7 +14,6 @@ logging.basicConfig(
 
 # Compute TF-IDF cosine similarity
 def compute_similarity(keywords: str, goals_list: list):
-    print(f"Made it here")
     try:
         vectorizer = TfidfVectorizer()
         tfidf_matrix = vectorizer.fit_transform([keywords] + goals_list)
@@ -48,7 +47,6 @@ def get_recommendations(keywords: str) -> list:
                     "category": category,
                 }
             )
-        print(f"Category {category}, recommendations {recommendations}")
     return recommendations
 
 
