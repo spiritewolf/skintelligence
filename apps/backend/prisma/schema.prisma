@@ -19,13 +19,13 @@ model User {
   updatedAt DateTime @updatedAt
 
   username String
-  email    String?
+  email    String @unique
 
   sessions Session[]
 
   questionnaire Questionnaire[]
 
-  skincareRecommendation SkincareRecommendation[]
+  skincareRecommendation SkincareRecommendation?
 }
 
 model Session {
@@ -87,7 +87,7 @@ model SkincareRecommendation {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  userId String @db.Uuid
+  userId String @unique @db.Uuid
   user   User   @relation(fields: [userId], references: [id])
 
   products SkincareProduct[]
