@@ -1,45 +1,42 @@
 import { gql } from '@apollo/client';
 
-export const GET_USERS = gql`
-  query GetUsers {
-    users {
+export const User = gql`
+  fragment UserFields on User {
+    id
+    username
+    email
+    session {
       id
-      username
-      session {
-        id
-        expiresAt
-        token
-      }
+      expiresAt
+      token
     }
+  }
+`;
+
+export const SkincareRecommendation = gql`
+  fragment SkincareRecommendationFields on SkincareRecommendation {
+    id
+    userId
+    products {
+      ...SkincareProductFields
+    }
+  }
+`;
+
+export const SkincareProduct = gql`
+  fragment SkincareProductFields on SkincareProduct {
+    id
+    name
+    description
+    link
+    category
   }
 `;
 
 export const GET_USER = gql`
   query GetUser {
     user {
-      id
-      username
-      email
-      session {
-        id
-        expiresAt
-        token
-      }
-    }
-  }
-`;
-
-export const VALIDATE_TOKEN = gql`
-  query ValidateToken($where: SessionTokenWhereInput!) {
-    validateToken(where: $where) {
-      id
-      username
-      email
-      session {
-        id
-        expiresAt
-        token
-      }
+      ...UserFields
     }
   }
 `;
@@ -49,14 +46,7 @@ export const SUBMIT_RESPONSES_FOR_RECOMMENDATION = gql`
     $data: SubmitResponsesForRecommendationData!
   ) {
     submitResponsesForRecommendation(data: $data) {
-      id
-      userId
-      products {
-        name
-        description
-        link
-        category
-      }
+      ...SkincareRecommendationFields
     }
   }
 `;
@@ -64,14 +54,7 @@ export const SUBMIT_RESPONSES_FOR_RECOMMENDATION = gql`
 export const CREATE_USER = gql`
   mutation CreateUser($data: CreateUserInput!) {
     createUser(data: $data) {
-      id
-      username
-      email
-      session {
-        id
-        expiresAt
-        token
-      }
+      ...UserFields
     }
   }
 `;

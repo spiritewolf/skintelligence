@@ -1,7 +1,7 @@
 'use client';
 
+import { useCreateUserMutation } from '@/skintelligence/frontend/app/api/graphql';
 import { ContentWrapper } from '@/skintelligence/frontend/components/contentWrapper';
-import { useMutation } from '@apollo/client';
 import {
   Box,
   Button,
@@ -18,7 +18,6 @@ import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { CREATE_USER } from '../../app/api/graphql/route';
 
 type CreateUserFormData = {
   username: string;
@@ -27,7 +26,7 @@ type CreateUserFormData = {
 
 export function GettingStartedForm() {
   const router = useRouter();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   const form = useForm<CreateUserFormData>({
     mode: 'uncontrolled',
@@ -41,11 +40,10 @@ export function GettingStartedForm() {
     },
   });
 
-  const [createUser] = useMutation(CREATE_USER, {
+  const [createUser, { loading: isCreateUserLoading }] = useCreateUserMutation({
     onCompleted: (res) => {
       if (res && res.createUser) {
         const user = res.createUser;
-        console.log('res', res);
         signIn('credentials', {
           id: user.id,
           username: user.username,
@@ -59,7 +57,7 @@ export function GettingStartedForm() {
                 'Thanks for that info! Lets set up your skincare routine.',
               color: 'violet',
             });
-            router.push(`/skincare-questionnaire/${user?.id}/`);
+            router.push(`/skincare-questionnaire`);
           }
         });
       }
@@ -133,7 +131,10 @@ export function GettingStartedForm() {
                       {...form.getInputProps('email')}
                     />
                     <Group justify="flex-end" mt="md">
-                      <Button type="submit" loading={status === 'loading'}>
+                      <Button
+                        type="submit"
+                        loading={status === 'loading' || isCreateUserLoading}
+                      >
                         Submit
                       </Button>
                     </Group>

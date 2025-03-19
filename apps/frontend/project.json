@@ -11,6 +11,19 @@
       "options": {
         "buildTarget": "frontend:build"
       }
+    },
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "options": {
+        "webpackConfig": "apps/frontend/webpack.config.js"
+      },
+      "dependsOn": ["generate-graphql-types"]
+    },
+    "generate-graphql-types": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx graphql-codegen --config codegen.ts"
+      }
     }
   }
 }

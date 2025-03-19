@@ -1,6 +1,9 @@
 'use client';
 
-import { useMutation, useQuery } from '@apollo/client';
+import {
+  useGetUserQuery,
+  useSubmitResponsesForRecommendationMutation,
+} from '@/skintelligence/frontend/app/api/graphql';
 import {
   Box,
   Button,
@@ -14,12 +17,7 @@ import {
 } from '@mantine/core';
 import { Form, Formik } from 'formik';
 import { isEmpty } from 'lodash';
-import { signOut } from 'next-auth/react';
 import { useState } from 'react';
-import {
-  GET_USER,
-  SUBMIT_RESPONSES_FOR_RECOMMENDATION,
-} from '../../app/api/graphql/route';
 import { ContentWrapper } from '../contentWrapper/contentWrapper';
 import { questionnaire } from './constants';
 
@@ -33,7 +31,6 @@ type QuestionnaireResponse = {
 export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const isLastStep = currentStep === questionnaire.length - 1;
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   // const router = useRouter();
 
   const initialValues: QuestionnaireResponse = {
@@ -43,7 +40,7 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
     })),
   };
 
-  const { data, loading: isGetUserLoading, error } = useQuery(GET_USER);
+  const { data, loading: isGetUserLoading } = useGetUserQuery();
 
   const handleNext = (values: QuestionnaireResponse) => {
     if (isEmpty(values.responses[currentStep].answer)) {
@@ -54,20 +51,17 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
   };
 
   const handleBack = () => setCurrentStep(currentStep - 1);
-  const [getRecommendations] = useMutation(
-    SUBMIT_RESPONSES_FOR_RECOMMENDATION,
-    {
+  const [getRecommendations, { loading: isSubmitResponsesLoading }] =
+    useSubmitResponsesForRecommendationMutation({
       onCompleted: (res) => {
         if (res) {
           console.log('TODO', res);
         }
       },
-    }
-  );
+    });
 
   const onSubmit = async (values: QuestionnaireResponse) => {
     if (values) {
-      setIsSubmitting(true);
       await getRecommendations({
         variables: {
           data: { responses: values.responses, userId },
@@ -76,16 +70,15 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
     }
   };
 
-  const combinedIsLoading = isGetUserLoading || isSubmitting;
+  const isLoading = isGetUserLoading || isSubmitResponsesLoading;
 
   return (
     <ContentWrapper>
       <Box w="100%">
         <Container size="xl" w="100%">
-          <Button onClick={() => signOut()}>LogOut</Button>
-          {combinedIsLoading || !data ? (
+          {isLoading || !data ? (
             <LoadingOverlay
-              visible={combinedIsLoading}
+              visible={isLoading}
               zIndex={1000}
               overlayProps={{ radius: 'sm', blur: 2 }}
             />
@@ -112,19 +105,15 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
                   mx="auto"
                   mt="md"
                 >
-                  Answer a few simple questions to understand your skin type and
-                  concerns, and receive personalized recommendations for your
-                  skincare routine.
+                  {data?.user?.username
+                    ? `Hello, ${data.user.username}! `
+                    : null}
+                  This questionnaire is designed to understand your skin type
+                  and concerns so that we can create personalized
+                  recommendations for your skincare routine.
                 </Text>
               </Box>
               <Card shadow="sm" padding="lg" radius="md" withBorder mt={10}>
-                {data &&
-                data.user &&
-                !combinedIsLoading &&
-                !error &&
-                data.user.username ? (
-                  <Text color="indigo">Hello, {data.user.username}</Text>
-                ) : null}
                 <Formik
                   initialValues={initialValues}
                   onSubmit={(values) => {
@@ -171,7 +160,7 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
                             <Button
                               variant="default"
                               onClick={handleBack}
-                              disabled={isSubmitting}
+                              disabled={isSubmitResponsesLoading}
                             >
                               Back
                             </Button>
@@ -180,13 +169,16 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
                           currentStep !== questionnaire.length - 1 ? (
                             <Button
                               onClick={() => handleNext(values)}
-                              disabled={isSubmitting}
+                              disabled={isSubmitResponsesLoading}
                             >
                               Next
                             </Button>
                           ) : null}
                           {isLastStep ? (
-                            <Button type="submit" disabled={isSubmitting}>
+                            <Button
+                              type="submit"
+                              disabled={isSubmitResponsesLoading}
+                            >
                               Submit
                             </Button>
                           ) : null}

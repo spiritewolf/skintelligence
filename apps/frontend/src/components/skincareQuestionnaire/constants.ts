@@ -1,12 +1,3 @@
-// export const q = [
-//     'How would you describe your skin immediately after cleansing and drying, but before putting on products?',
-//     'How would you describe the way your skin feels at the end of a long day?',
-//     'How many blemishes do you get each month?',
-//     'How often do you experience the following: redness, irritation, itchiness, peeling or flaking, feeling of warmth on cheeks?',
-//     'What do you wish for your skin care routine to fix for you?',
-//     'How often do you wear sunscreen?',
-//   ];
-
 export type SkincareQuestion = {
   question: string;
   questionId: string;
@@ -47,7 +38,7 @@ export const questionnaire: SkincareQuestion[] = [
     questionId: '3',
     options: [
       { label: '10 or more', value: 'acne' },
-      { label: 'Around 4-6', value: 'acne' },
+      { label: 'Around 4-6', value: 'some-acne' },
       { label: 'Just a few', value: 'few' },
       { label: 'Very few or none at all', value: 'none' },
     ],
@@ -58,8 +49,14 @@ export const questionnaire: SkincareQuestion[] = [
     questionId: '4',
     options: [
       { label: 'I experience multiple of those daily', value: 'sensitive' },
-      { label: 'I experience at least one of those daily', value: 'sensitive' },
-      { label: 'I experience some of those occasionally', value: 'rarely' },
+      {
+        label: 'I experience at least one of those daily',
+        value: 'semi-sensitive',
+      },
+      {
+        label: 'I experience some of those occasionally',
+        value: 'occasionally',
+      },
       { label: 'I rarely or never experience those', value: 'rarely' },
     ],
   },
@@ -81,9 +78,12 @@ export const questionnaire: SkincareQuestion[] = [
     questionId: '6',
     options: [
       { label: 'Daily, with multiple reapplications', value: 'daily' },
-      { label: 'Daily, but I forget to reapply', value: 'daily' },
-      { label: `Only when I need to or when I'm in the sun`, value: 'sun' },
-      { label: 'Rarely, if ever', value: 'sun' },
+      { label: 'Daily, but I forget to reapply', value: 'almost-daily' },
+      {
+        label: `Only when I need to or when I'm in the sun`,
+        value: 'occasionally',
+      },
+      { label: 'Rarely, if ever', value: 'rarely' },
     ],
   },
 ];

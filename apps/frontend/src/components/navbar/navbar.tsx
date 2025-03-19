@@ -11,7 +11,6 @@ import {
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { HomeIcon, LightningBoltIcon } from '@radix-ui/react-icons';
-import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 const navItems = [
@@ -28,7 +27,6 @@ export const Navbar = ({ children }: { children: React.ReactNode }) => {
   const [isMobileOpen, { toggle: toggleMobile }] = useDisclosure();
   const [isDesktopOpen, { toggle: toggleDesktop }] = useDisclosure(true);
   const [isActive, setIsActive] = useState(0);
-  const pathname = usePathname();
   return (
     <AppShell
       padding="md"
