@@ -1,6 +1,6 @@
-## SkinGenie (in development)
+## Skintelligence
 
-Skin Genie is a recommendation system that generates a skincare routine for a user from their input.
+Skintellignce is a recommendation system that generates a skincare routine for a user from their input.
 
 ## Design
 
@@ -8,8 +8,4 @@ The user fills out a brief questionnaire to determine skin type, skin goals, and
 
 ---
 
-![IMG](https://i.ibb.co/kQgwXq9/Screen-Shot-2020-11-18-at-10-18-56-AM.png)
-
-![IMG](https://i.ibb.co/FqNLkFP/Screen-Shot-2020-11-18-at-10-19-11-AM.png)
-
-![IMG](https://i.ibb.co/dr3SCDr/Screen-Shot-2020-11-18-at-10-24-58-AM.png)
+![IMG][(https://i.ibb.co/kQgwXq9/Screen-Shot-2020-11-18-at-10-18-56-AM.png](https://ibb.co/j9fLyZ2S))
