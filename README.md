@@ -8,4 +8,4 @@ The user fills out a brief questionnaire to determine skin type, skin goals, and
 
 ---
 
-![IMG](https://ibb.co/j9fLyZ2S)
+![IMG](https://i.ibb.co/wZgKSrXf/Screen-Shot-2025-03-18-at-6-29-09-PM.png)
