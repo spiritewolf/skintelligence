@@ -46,7 +46,6 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
   const { data, loading: isGetUserLoading, error } = useQuery(GET_USER);
 
   const handleNext = (values: QuestionnaireResponse) => {
-    console.log('values: ', values, isLastStep, currentStep);
     if (isEmpty(values.responses[currentStep].answer)) {
       alert('Please select an answer');
       return;
@@ -60,7 +59,7 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
     {
       onCompleted: (res) => {
         if (res) {
-          console.log('res', res);
+          console.log('TODO', res);
         }
       },
     }
@@ -82,7 +81,7 @@ export const SkincareQuestionnaire = ({ userId }: { userId: string }) => {
   return (
     <ContentWrapper>
       <Box w="100%">
-        <Container size="xl">
+        <Container size="xl" w="100%">
           <Button onClick={() => signOut()}>LogOut</Button>
           {combinedIsLoading || !data ? (
             <LoadingOverlay

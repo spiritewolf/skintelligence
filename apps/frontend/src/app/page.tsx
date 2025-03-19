@@ -25,8 +25,8 @@ export default function Index() {
   const router = useRouter();
   return (
     <ContentWrapper>
-      <Box>
-        <Container size="xl" py={120}>
+      <Box w="100%">
+        <Container size="xl" w="100%">
           <Grid gutter={40} align="center">
             <Grid.Col span={{ base: 12, md: 7 }}>
               <Stack gap="xl">

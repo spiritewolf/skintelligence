@@ -16,16 +16,14 @@ export const ContentWrapper = ({
   description,
 }: ContentWrapperProps) => {
   return (
-    <Container size={'xl'} h={'100%'} px={'0px'}>
+    <Container size={'xl'} h={'100%'} px={'0px'} w="100%">
       <Navbar>
-        <Stack h={'100%'} w={'100%'} p={{ sm: 'md', md: '3xl' }} pt={'2rem'}>
-          <Stack px={'md'}>
-            <Box>
-              <Title order={1}>{title}</Title>
-              <Text>{description}</Text>
-            </Box>
-            {children}
-          </Stack>
+        <Stack p={{ sm: 'md', md: 'md', xl: '3xl' }} w="100%" h="100%">
+          <Box>
+            <Title order={1}>{title}</Title>
+            <Text>{description}</Text>
+          </Box>
+          {children}
         </Stack>
       </Navbar>
     </Container>
